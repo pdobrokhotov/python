@@ -1,5 +1,10 @@
-bicycles = ['trek', 'cannondale', 'redline', 'specialized']
 bicycles = ["trek", "cannondale", "redline", "specialized"]
+# NOTES: LISTS are zero based ans we can refer the 1st elemeet as bicycles[0]
+#        Also we can refer to range like: bicycles[0:3] or bicycles[:3]
+# But NOTE that the upper value = 3 means actualy 2. 
+# I.e. [0:3] means 0,1,2 and [:3] means also 0,1,2 ("3" is NOT included)
+# Also you may set range exluding the upper bound, like players[2:])
+players = ['charles', 'martina', 'michael', 'florence', 'eli']
 print(bicycles)
 print(bicycles[0].upper()) # tale the 1st element = TREK
 print(bicycles[-1]) # take the last element = specialized
@@ -83,6 +88,53 @@ print(cars)
 print ("The length of the LIST is  = " + str(len(cars)) )
 
 #=======================================================================================
+#==========  Making Numerical Lists ====================================================
 #=======================================================================================
 print("===================================================================")
+# Python’s range() function makes it easy to generate a series of numbers.
+for value in range(1,10):
+    print(value)
 
+print("===================================================================")
+
+
+#==================== Check LIST for values or ENPTY ========================
+#---------------------------------------------------------------------------
+#Check if list is empty. When the name of a list is used in an if statement, 
+# Python returns True if the list contains at least one item; 
+# An empty list evaluates to False
+requested_toppings = []
+#The comnparison to True or False will not work!
+print(requested_toppings == True)  # = False
+print(requested_toppings == False) # = false
+#But the code below WORKS
+if requested_toppings:
+   print("List is FULL")
+else:
+   print("List is EMPTY")
+
+#-------------------------------------------------------------------------------
+ 
+if requested_toppings:
+    for requested_topping in requested_toppings:
+        print("Adding " + requested_topping + ".")
+    print("\nFinished making your pizza!")
+else:
+    print("Are you sure you want a plain pizza?")
+#--------------------------------------------------------------------------
+#Check if list  hav valie of
+requested_toppings.append("a")
+requested_toppings.append("b")
+requested_toppings.append("c")
+
+requested_toppings.remove('a') # delete by value 
+del requested_toppings[0]      # delete by index
+#print(requested_toppings)
+if "a" in requested_toppings:
+    print("'a' is present")
+elif "b" in requested_toppings:
+    print("'b' is present")
+elif "c" in requested_toppings:
+    print("'c' is present")    
+else:
+    print("this char is not precent")
