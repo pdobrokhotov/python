@@ -1,27 +1,3 @@
-class Dog():
-    """A simple attempt to model a dog."""
-    def __init__(self, name, age):
-        """Initialize name and age attributes."""
-        self.name = name
-        self.age = age
-    def sit(self):
-        """Simulate a dog sitting in response to a command."""
-        print(self.name.title() + " is now sitting.")
-    def roll_over(self):
-        """Simulate rolling over in response to a command."""
-        print(self.name.title() + " rolled over!")
-#====================================================================================
-'''
-my_dog = Dog('willie', 6)
-your_dog = Dog('lucy', 3)
-print("My dog's name is " + my_dog.name.title() + ".")
-print("My dog is " + str(my_dog.age) + " years old.")
-my_dog.sit()
-print("\nYour dog's name is " + your_dog.name.title() + ".")
-print("Your dog is " + str(your_dog.age) + " years old.")
-your_dog.sit()
-'''
-
 #======================================================================================
 class Car():
     """A simple attempt to represent a car."""
@@ -59,18 +35,6 @@ class Battery(): # A simple attempt to model a battery for an electric car
     def show_battery_charge(self):
         print("This car has a " + str(self.battery_charge) + "-kWh battery.")    
 #====================================================================================== 
-'''  
-my_new_car = Car('audi', 'a4', 2016)
-my_new_car.set_mileage(23)
-# my_new_car.set_mileage(2)
-print(my_new_car.get_descriptive_name())
-print(my_new_car.show_mileage())
-my_new_car.increment_mileage(2)
-print(my_new_car.show_mileage())
-''' 
-#================== Inherited (child) class =============================== 
-#At u we start with Car. When you create a child class, the parent class must 
-#be part of the current file and must appear before the child class in the file.
 class ElectricCar(Car):
     """Represent aspects of a Car-class, specific to electric vehicles."""
     def __init__(self, make, model, year): #Initialize attributes of the parent class. 
@@ -84,14 +48,7 @@ class ElectricCar(Car):
     def set_gas_amount (self): # this method taken from parent class is overiden 
         print("This car doesn't have a gas tank!")   
         
-                   
-#=========================================================================        
-my_tesla = ElectricCar('tesla', 'model s', 2016)
-print(my_tesla.get_descriptive_name())
-my_tesla.set_gas_amount() # this call overides a method from parent class = Car
-#print(my_tesla.battery_charge)
-my_tesla.show_battery_charge()
-my_tesla.battery.show_battery_charge()
+
 
 
 

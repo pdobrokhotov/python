@@ -1,0 +1,16 @@
+# this class is like Dictionary but keeps the order new key-pairs are added
+from collections import OrderedDict # works as ordered Dictionary
+# create an instance of the OrderedDict class. Notice there are no curly brackets; the call to OrderedDict() 
+# creates an empty ordered dictionary for us and stores it in favorite_languages. We then add each name and language
+# to favorite_languages one at a time
+favorite_languages = OrderedDict() 
+# add new key-pairs to clas as if it were a list. This is a great class to be aware of 
+# because it combines the main benefit # of lists (retaining your original order) with 
+# the main feature of dictionaries (connecting pieces of information).
+favorite_languages['jen'] = 'python'
+favorite_languages['sarah'] = 'c'
+favorite_languages['edward'] = 'ruby'
+favorite_languages['phil'] = 'python'
+#loop names
+for name, language in favorite_languages.items():
+    print(name.title() + "'s favorite language is " + language.title() + ".")
