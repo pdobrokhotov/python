@@ -131,10 +131,61 @@ if requested_toppings:
 else:
     print("Are you sure you want a plain pizza?")
 
+#=================================================================
+#===================== SORTING LISTS =============================
+#=================================================================
+print("========================= LOOP SORTED LIST =======================================")
+friends = ['zak', 'fill','dave','arnold']
+# We start looping our dictionary's keys (by sorting it first) 
+# and for current key check if it exists in our LIST
+for name in sorted(friends):
+    print(name)
+#=================================================================
+#===================== UNIQUE LISTS ==============================
+#=================================================================
+print("============= GET UNIQUE LIST using SET()-function ===============================")
+friends = ['zak','zak','zak', 'fill', 'fill','dave','arnold','arnold','arnold','arnold']
+print(friends) 
+print(set(friends))    
+   
 #=======================================================================================
 #=======================================================================================
-print("===================================================================")
+print("================= LOOPING USING RANGE-function =====================================")
+# Range starts at index = 0
+for my_number in range(10): # loop 10 times
+    print("my_number = " + str(my_number))
+    
+#=======================================================================================
+#=======================================================================================
+print("================= LOOPING USING WHILE =====================================")
+current_number = 1
+while current_number <= 5:
+    print("current_number = " + str(current_number))      
+    current_number += 1
 
 #=======================================================================================
+#======================= Moving Items from One List to Another ========================= 
+print("================= Moving Items from One List to Another =========================")
+# Start with users that need to be verified, and an empty list to hold confirmed users.
+unconfirmed_users = ['alice', 'brian', 'candace']
+confirmed_users = []
+# Verify each user until there are no more unconfirmed users.
+# Move each verified user into the list of confirmed users.
+while unconfirmed_users:
+    current_user = unconfirmed_users.pop()
+    print("Verifying user: " + current_user.title())
+    confirmed_users.append(current_user)
+# Display all confirmed users.
+print("\nThe following users have been confirmed:")
+for confirmed_user in confirmed_users:
+    print(confirmed_user.title())
+    
+
 #=======================================================================================
-print("===================================================================")
+#================ Removing All Instances of Specific Values from a List================= 
+print("============ Removing All Instances of Specific Values from a List ==============")
+pets = ['dog', 'cat', 'dog', 'goldfish', 'cat', 'rabbit', 'cat']
+print(pets)
+while 'cat' in pets:
+   pets.remove('cat')
+print(pets)

@@ -138,3 +138,38 @@ elif "c" in requested_toppings:
     print("'c' is present")    
 else:
     print("this char is not precent")
+
+#=================================================================
+#===================== SORTING LISTS =============================
+#=================================================================
+print("========================= SORT LIST =======================================")
+friends = ['zak', 'fill','dave','arnold']
+# We start looping our dictionary's keys (by sorting it first) 
+# and for current key check if it exists in our LIST
+for name in sorted(friends):
+    print(name)
+
+#=================================================================
+#===================== UNIQUE LISTS ==============================
+#=================================================================
+print("============= GET UNIQUE LIST using SET()-function ===============================")
+friends = ['zak','zak','zak', 'fill', 'fill','dave','arnold','arnold','arnold','arnold']
+print(friends) 
+print(set(friends))  
+
+#=======================================================================================
+#======================= Moving Items from One List to Another ========================= 
+print("================= Moving Items from One List to Another =========================")
+# Start with users that need to be verified, and an empty list to hold confirmed users.
+unconfirmed_users = ['alice', 'brian', 'candace']
+confirmed_users = []
+# Verify each user until there are no more unconfirmed users.
+# Move each verified user into the list of confirmed users.
+while unconfirmed_users:
+    current_user = unconfirmed_users.pop()
+    print("Verifying user: " + current_user.title())
+    confirmed_users.append(current_user)
+# Display all confirmed users.
+print("\nThe following users have been confirmed:")
+for confirmed_user in confirmed_users:
+    print(confirmed_user.title())
