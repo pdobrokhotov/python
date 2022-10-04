@@ -1,3 +1,11 @@
+'''
+One excellent resource for exploring the
+Python standard library is a site called Python Module of the Week. Go to
+http://pymotw.com/ and look at the table of contents. Find a module that
+looks interesting to you and read about it, or explore the documentation of
+the collections and random modules.
+'''
+
 # this class is like Dictionary but keeps the order new key-pairs are added
 from collections import OrderedDict # works as ordered Dictionary
 # create an instance of the OrderedDict class. Notice there are no curly brackets; the call to OrderedDict() 
@@ -11,6 +19,13 @@ favorite_languages['jen'] = 'python'
 favorite_languages['sarah'] = 'c'
 favorite_languages['edward'] = 'ruby'
 favorite_languages['phil'] = 'python'
-#loop names
+#loop names-lamguages key-value pairs (hust like it were Dictionary)
 for name, language in favorite_languages.items():
     print(name.title() + "'s favorite language is " + language.title() + ".")
+#==============================================================================
+from random import randint
+x = randint(1, 6)
+print(x)
+#==============================================================================
+
+
