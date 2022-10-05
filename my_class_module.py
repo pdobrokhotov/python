@@ -1,4 +1,5 @@
 #======================================================================================
+# NOTE: When we use "self"-prefix with variable, it means this variable can be accesed with CLASS
 class Car():
     """A simple attempt to represent a car."""
     def __init__(self, make, model, year):
@@ -48,7 +49,32 @@ class ElectricCar(Car):
     def set_gas_amount (self): # this method taken from parent class is overiden 
         print("This car doesn't have a gas tank!")   
         
-
+#============================================================================
+#====== The class below wil'be use for TESTING in [TESTING_CLASS.py] ======== 
+#============================================================================
+# This CLASS collects anonymous answers to a survey question. 
+'''
+This class starts with a survey question that you provide and includes
+an empty list to store responses. The class has methods to print the survey
+question, add a new response to the response list, and print all the
+responses stored in the list x. To create an instance from this class, 
+all you have to provide is a question. Once you have an instance representing
+a particular survey, you display the survey question with show_question(), 
+store a response using store_response(), and show results with show_results().
+'''
+class AnonymousSurvey(): 
+    def __init__(self, question): # Store a question, and prepare to store responses. 
+        self.question = question
+        self.responses = []
+    def show_question(self): # Show the survey question. 
+        print(self.question)
+    def store_response(self, new_response): # Store a single response to the survey. 
+        self.responses.append(new_response)
+    def show_results(self): # Show all the responses that have been given. 
+        print("Survey results:")
+        for response in self.responses:
+            print('- ' + response)
+#============================================================================
 
 
 

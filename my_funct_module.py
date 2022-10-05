@@ -81,7 +81,7 @@ def count_words(filename, ignore_error_flag = False):
         print("The file [" + filename + "] has about " + str(num_words) + " words.")
 
 #========================================================================================
-#==================== FUNCTION USED FOR TESTING in [TESTING.py] =========================
+#=============== FUNCTION USED FOR TESTING in [TESTING_FUNCTION.py] ===================== 
 #========================================================================================
 def get_formatted_name(first, last, middle=''):
     """Generate a neatly formatted full name."""

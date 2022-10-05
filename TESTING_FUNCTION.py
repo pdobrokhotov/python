@@ -11,6 +11,16 @@ tests covering all the possible ways you can use a function. Achieving full
 coverage on a large project can be daunting. It’s often good enough to write
 tests for your code’s critical behaviors and then aim for full coverage only if
 the project starts to see widespread use.
+-------------------------------------------------------------
+Table 11-1: Assert Methods Available from the unittest Module
+-------------------------------------------------------------
+assertEqual(a, b)          Verify that a == b
+assertNotEqual(a, b)       Verify that a != b
+assertTrue(x)              Verify that x is True
+assertFalse(x)             Verify that x is False
+assertIn(item, list)       Verify that item is in list
+assertNotIn(item, list)    Verify that item is not in list
+------------------------------------------------------------
 '''
 import unittest # We'll use this lib to test functionality of imported function below
 from my_funct_module import get_formatted_name
@@ -45,47 +55,26 @@ class NamesTestCase(unittest.TestCase):
     def test_first_last_middle_name(self): # Do names like 'Wolfgang Amadeus Mozart' work?"""
         formatted_name = get_formatted_name('wolfgang', 'mozart', 'amadeus')
         self.assertEqual(formatted_name, 'Wolfgang Amadeus Mozart')
-
 # After running command below (if all is fine) we'se on screen smth like:
 #   Ran 1 test in 0.000s
 #   OK    
 # Otherwise we'll se error mesage explaining the difference in the actual and expected result    
 unittest.main()
 # Now we know that our function works OK for both cases with\without middle name
-#============================================================================================
-
-'''
--------------------------------------------------------------
-Table 11-1: Assert Methods Available from the unittest Module
--------------------------------------------------------------
-assertEqual(a, b)          Verify that a == b
-assertNotEqual(a, b)       Verify that a != b
-assertTrue(x)              Verify that x is True
-assertFalse(x)             Verify that x is False
-assertIn(item, list)       Verify that item is in list
-assertNotIn(item, list)    Verify that item is not in list
-------------------------------------------------------------
-'''
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#=========================== NOTE ==========================================================
+#When a test case is running, Python prints one character for each unit test as it is
+#completed. A passing test prints a dot, a test that results in an error prints an E, and
+#a test that results in a failed assertion prints an F. This is why you’ll see a different
+#number of dots and characters on the first line of output when you run your test cases.
+#If a test case takes a long time to run because it contains many unit tests, you can
+#watch these results to get a sense of how many tests are passing.
+#===========================================================================================
 
 
 
 '''
 #=======================================================================================
-#=====================  TESTING OLD WAY  ===============================================
+#=====================  TESTING FUNCTION OLD WAY  ======================================
 print("================================================================================")
 print("Enter 'q' at any time to quit.")
 while True:
