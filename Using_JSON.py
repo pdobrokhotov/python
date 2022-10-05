@@ -27,16 +27,17 @@ print(numbers)
 
 #=====================================================================================
 print("\n====== Read data from user input using JSON. If no file, create it ============\n") 
-filename = ""  
+filename = "" # or instead of empty string we could use: filename = None 
 try:
     with open(filename) as f_obj:
         username = json.load(f_obj)
 except FileNotFoundError:
     username = input("What is your name? ")
-    if username:
+    if username: # if username = "" or None, this lines = False
         filename = username + '.json'
     else:
-        filename = "username.json"        
+        filename = "username.json"   
+        #return None   #here we could also use RETURN-statement     
     with open(filename, 'w') as f_obj:
         json.dump(username, f_obj)
         print("We'll remember you when you come back, " + username + "!")    

@@ -1,3 +1,8 @@
+'''
+This is good practice: a function should either return
+the value you’re expecting, or it should return None
+'''
+
 #============================== ATTENTION ==================================================
 #If you specify a default value for a parameter, no spaces should be used on either side of the equal sign:
 # def function_name(parameter_0, parameter_1='default value')
