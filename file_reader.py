@@ -42,7 +42,7 @@ for file_row in file_rows:
 print(pi_string) # or print(pi_string[:10] + "...") if want less digits on screen
 print(len(pi_string))
 
-'''  Chck if your birsfay inside pi
+'''  Check if your birsfay inside pi
 birthday = input("Enter your birthday, in the form mmddyy: ")
 if birthday in pi_string:
    print("Your birthday appears in the first million digits of pi!")
@@ -52,3 +52,14 @@ else:
  message.replace('dog', 'cat')
  
 '''
+#=========================================================================================
+print("====== Using exception ============") 
+filename = 'alice.txt' # this file does NOT exist in thus givesv error
+try:
+    with open(filename) as f_obj:
+        contents = f_obj.read()
+except FileNotFoundError:
+    print("Sorry, the file " + filename + " does not exist.")
+else: # in else block we do all we ant is no erros
+    print(contents) # or print(pi_string[:10] + "...") if want less digits on screen
+#=========================================================================================
