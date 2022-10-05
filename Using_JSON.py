@@ -24,6 +24,10 @@ filename = 'numbers.json'
 with open(filename) as f_obj:
     numbers = json.load(f_obj)
 print(numbers)
+# We can also print each number, taken from file, separately
+for each_nun in numbers:
+    print(each_nun)
+    
 
 #=====================================================================================
 print("\n====== Read data from user input using JSON. If no file, create it ============\n") 

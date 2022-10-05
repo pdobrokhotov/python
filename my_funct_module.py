@@ -79,3 +79,15 @@ def count_words(filename, ignore_error_flag = False):
         words = contents.split()
         num_words = len(words) 
         print("The file [" + filename + "] has about " + str(num_words) + " words.")
+
+#========================================================================================
+#==================== FUNCTION USED FOR TESTING in [TESTING.py] =========================
+#========================================================================================
+def get_formatted_name(first, last, middle=''):
+    """Generate a neatly formatted full name."""
+    if middle:
+        full_name = first + ' ' + middle + ' ' + last
+    else:
+        full_name = first + ' ' + last
+    return full_name.title()
+#========================================================================================
