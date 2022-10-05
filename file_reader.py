@@ -63,3 +63,17 @@ except FileNotFoundError:
 else: # in else block we do all we ant is no erros
     print(contents) # or print(pi_string[:10] + "...") if want less digits on screen
 #=========================================================================================
+
+''' 
+#=====================================================================================   
+# Read data using JSON LIBRARY    
+#=====================================================================================   
+import json    
+#=====================================================================================
+print("\n====== Load data from file using JSON ============\n") 
+filename = 'numbers.json'
+with open(filename) as f_obj:
+    numbers = json.load(f_obj)
+print(numbers)
+#=====================================================================================
+'''  
