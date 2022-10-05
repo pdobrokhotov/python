@@ -12,7 +12,7 @@ def check_events(ship):
     # Each event is picked up by the pygame.event.get() method
     # Each keypress is registered as a KEYDOWN event. Clos button-click is QUIT-event
     for event in pygame.event.get():  
-        if event.type == pygame.QUIT: # if player clicks the game window’s close button, QUIT-eveny arises
+        if event.type == pygame.QUIT: # if player clicks the game window’s close button, QUIT-event arises
             sys.exit()
         elif event.type == pygame.KEYDOWN:   # KEYDOWN-event raises when user presses any button
             if event.key == pygame.K_RIGHT:  # user presses button = [right arrow key] (K_RIGHT)
