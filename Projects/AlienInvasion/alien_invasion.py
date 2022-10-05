@@ -1,11 +1,11 @@
 '''
 First, we import the sys and pygame modules. The pygame module contains
-the functionality needed to make a game. We’ll use the sys module to
+the functionality needed to make a game. We'll use the sys module to
 exit the game when the player quits.
 Alien Invasion starts as the function run_game(). The line pygame.init()
-at u initializes background settings that Pygame needs to work properly.
-At v, we call pygame.display.set_mode() to create a display window called
-screen, on which we’ll draw all of the game’s graphical elements. The argument
+at initializes background settings that Pygame needs to work properly.
+Then we call pygame.display.set_mode() to create a display window called
+screen, on which we'll draw all of the game's graphical elements. The argument
 (1200, 800) is a tuple that defines the dimensions of the game window.
 By passing these dimensions to pygame.display.set_mode(), we create a game
 window 1200 pixels wide by 800 pixels high. (You can adjust these values
@@ -16,6 +16,7 @@ import sys    # We’ll use the sys module to exit the game when the player quit
 import pygame # Main library we use for gaming-code
 from settings import Settings # this file stores code for Settings-class
 from ship import Ship # import file with Ship-class
+import game_functions as gf # stores all the function we're gone use with events in while-loop 
 #=========================================================================================
 # Alien Invasion starts as the function run_game().
 def run_game():   
@@ -38,7 +39,6 @@ def run_game():
     pygame.display.set_caption("Alien Invasion")
     # Make a ship.
     ship = Ship(screen)
-    
     '''
     The game is controlled by a while loop that contains an event loop
     and code that manages screen updates. An event is an action that the user
@@ -47,20 +47,13 @@ def run_game():
     listen for an event and perform an appropriate task depending on the kind
     of event that occurred. The for loop at x is an event loop.  
     '''
-    
     # Start the main loop for the game.
     while True:
-        # Watch for keyboard and mouse events. For example, when the player clicks
-        # the game window’s close button, a pygame.QUIT event is detected and we call 
-        # sys.exit() to exit the game
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            # fill the screen with the background color dfined as RGB() which takes only one argument: a color.
-            screen.fill(ai_settings.bg_color)
-            ship.blitme() # Render ship in the screen
-            pygame.display.flip() # Make the most recently drawn screen visible.
+        gf.check_events(ship) # Respond to keypresses and mouse events passig Ship-object
+        ship.update() # Ship’s position is updated after checking keyboard events 
+                      # but before updating the screen.
+        gf.update_screen(ai_settings, screen, ship) # Update images on the screen
 #=========================================================================================
-
-# Run function that STARTS GAME    
+# Run MAIN function that STARTS GAME    
 run_game()
+#=========================================================================================
