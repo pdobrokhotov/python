@@ -26,7 +26,7 @@ class Ship():
         self.screen = screen
         self.ai_settings = ai_settings # turn this parameter into an attribute, so we can use it in update()
         #image_ship_path = "D:\My Documents\python\Projects\AlienInvasion\images\ship.bmp" # = absolute path
-        image_ship_path = "Projects\AlienInvasion\images\ship.bmp" # = relative path
+        image_ship_path = "Projects/AlienInvasion/images/ship.bmp" # = relative path
         self.image = pygame.image.load(image_ship_path) # Load the ship image and get its rect.
         self.rect = self.image.get_rect() # store rect-obkect for Ship image
         self.screen_rect = screen.get_rect() # access the surface’s rect attribute (i.e. our screen)
@@ -45,12 +45,12 @@ class Ship():
         self.moving_right = False # we move right keeping arrow-button pressed
         self.moving_left  = False # we move left keeping  arrow-button pressed
         '''
-        When you’re working at an edge of the screen,
-        work with the top, bottom, left, or right attributes. When you’re adjusting
+        When you're working at an edge of the screen,
+        work with the top, bottom, left, or right attributes. When you're adjusting
         the horizontal or vertical placement of the rect, you can just use the x and y
         attributes, which are the x- and y-coordinates of its top-left corner. These
         attributes spare you from having to do calculations that game developers
-        formerly had to do manually, and you’ll find you’ll use them often    
+        formerly had to do manually, and you'll find you'll use them often    
         '''
     #--------------------------------------------------------------------------------
     def update(self): # Update the ship's position based on the movement flag. 
@@ -74,13 +74,13 @@ When working with a rect object, you can use the x- and y-coordinates
 of the top, bottom, left, and right edges of the rectangle, as well as the
 center. You can set any of these values to determine the current position
 of the rect.
-When you’re centering a game element, work with the center, centerx, or
-centery attributes of a rect. When you’re working at an edge of the screen,
-work with the top, bottom, left, or right attributes. When you’re adjusting
+When you're centering a game element, work with the center, centerx, or
+centery attributes of a rect. When you're working at an edge of the screen,
+work with the top, bottom, left, or right attributes. When you're adjusting
 the horizontal or vertical placement of the rect, you can just use the x and
 y attributes, which are the x- and y-coordinates of its top-left corner. These
 attributes spare you from having to do calculations that game developers
-formerly had to do manually, and you’ll find you’ll use them often
+formerly had to do manually, and you'll find you'll use them often
 ----------------------- NOTE -------------------------------------------------
 In Pygame, the origin (0, 0) is at the top-left corner of the screen, and coordinates
 increase as you go down and to the right. On a 1200 by 800 screen, the origin is at
