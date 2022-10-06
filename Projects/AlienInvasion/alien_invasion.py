@@ -17,6 +17,7 @@ import pygame # Main library we use for gaming-code
 from settings import Settings # this file stores code for Settings-class
 from ship import Ship # import file with Ship-class
 import game_functions as gf # stores all the function we're gone use with events in while-loop 
+from pygame.sprite import Group # Group behaves like a list and stores the bullets group
 #=========================================================================================
 # Alien Invasion starts as the function run_game().
 def run_game():   
@@ -37,8 +38,10 @@ def run_game():
     '''
     screen = pygame.display.set_mode((1200, 800)) 
     pygame.display.set_caption("Alien Invasion")
-    # Make a ship.
-    ship = Ship(screen)
+    # Make a ship. We now need also to pass ai_settings as an argument
+    ship = Ship(ai_settings, screen)
+    # Make a group to store bullets in.
+    bullets = Group()
     '''
     The game is controlled by a while loop that contains an event loop
     and code that manages screen updates. An event is an action that the user
@@ -49,10 +52,12 @@ def run_game():
     '''
     # Start the main loop for the game.
     while True:
-        gf.check_events(ship) # Respond to keypresses and mouse events passig Ship-object
-        ship.update() # Ship’s position is updated after checking keyboard events 
-                      # but before updating the screen.
-        gf.update_screen(ai_settings, screen, ship) # Update images on the screen
+        # Respond to keypresses and mouse events passig Ship and Bullets-group objects
+        gf.check_events(ai_settings, screen, ship, bullets)
+        ship.update()              # Update Ship images on the screen 
+        gf.update_bullets(bullets) # Update Bullets images on the screen 
+        gf.update_bullets(bullets) # Get rid of bullets that have run behind the screen.
+        gf.update_screen(ai_settings, screen, ship, bullets)              
 #=========================================================================================
 # Run MAIN function that STARTS GAME    
 run_game()

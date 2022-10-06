@@ -1,7 +1,7 @@
 '''
 The open() function returns an object representing the file. Here, open('pi_digits.txt')
 returns an object representing pi_digits.txt. Python stores this object in
-file_object, which we’ll work with later in the program.
+file_object, which we'll work with later in the program.
 ------------------------------------------------------
 You can open a file in read mode ('r'), write mode ('w'), append mode ('a'), 
 or a mode that allows you to read and write to the file ('r+'). 
@@ -42,7 +42,8 @@ for file_row in file_rows:
 print(pi_string) # or print(pi_string[:10] + "...") if want less digits on screen
 print(len(pi_string))
 
-'''  Check if your birsfay inside pi
+''' 
+# Check if your birsfay inside pi
 birthday = input("Enter your birthday, in the form mmddyy: ")
 if birthday in pi_string:
    print("Your birthday appears in the first million digits of pi!")
@@ -50,17 +51,16 @@ else:
    print("Your birthday does not appear in the first million digits of pi.")
  ===================== use replace if needed ======================
  message.replace('dog', 'cat')
- 
 '''
 #=========================================================================================
 print("====== Using exception ============") 
-filename = 'alice.txt' # this file does NOT exist in thus givesv error
-try:
+filename = 'alice.txt' # this file does NOT exist in thus gives error
+try: # in try-block we launch the code where we can expect errors
     with open(filename) as f_obj:
         contents = f_obj.read()
-except FileNotFoundError:
+except FileNotFoundError: # in except-block we try catching a specialized error
     print("Sorry, the file " + filename + " does not exist.")
-else: # in else block we do all we ant is no erros
+else: # in else block we do all we want when are sure no error can occur
     print(contents) # or print(pi_string[:10] + "...") if want less digits on screen
 #=========================================================================================
 

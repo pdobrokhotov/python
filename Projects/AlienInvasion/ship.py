@@ -22,8 +22,9 @@ import pygame
 #====================================================================================
 class Ship():
     #--------------------------------------------------------------------------------
-    def __init__(self, screen): # Initialize the ship and set its starting position. 
+    def __init__(self, ai_settings, screen): # Initialize the ship and set its starting position. 
         self.screen = screen
+        self.ai_settings = ai_settings # turn this parameter into an attribute, so we can use it in update()
         #image_ship_path = "D:\My Documents\python\Projects\AlienInvasion\images\ship.bmp" # = absolute path
         image_ship_path = "Projects\AlienInvasion\images\ship.bmp" # = relative path
         self.image = pygame.image.load(image_ship_path) # Load the ship image and get its rect.
@@ -36,6 +37,10 @@ class Ship():
         # so it's centered horizontally and aligned with the bottom of the screen.        
         self.rect.centerx = self.screen_rect.centerx 
         self.rect.bottom = self.screen_rect.bottom
+        # the rect attrib can store only the integer. Thus to store the ship’s position 
+        # accurately, we define new attribute self.center, which can hold decimal values
+        self.center = float(self.rect.centerx) # Store a decimal value for the ship's center.
+        
         # Movement flag to distinguish button single PRESS from CONSTANT
         self.moving_right = False # we move right keeping arrow-button pressed
         self.moving_left  = False # we move left keeping  arrow-button pressed
@@ -49,10 +54,17 @@ class Ship():
         '''
     #--------------------------------------------------------------------------------
     def update(self): # Update the ship's position based on the movement flag. 
-        if self.moving_right:
-           self.rect.centerx += 1 # incremet x-coordinate (move right)
-        if self.moving_left:
-           self.rect.centerx -= 1 # decremet x-coordinate (move left)
+        # Update the ship's self.center value, not the self.rect.centerx as was before. !!!
+        # Also check not to run behind the screen borders both in the right and left positions
+        if self.moving_right and self.rect.right < self.screen_rect.right: # stop if out of border
+           self.center += self.ai_settings.ship_speed_factor # incremet x-coordinate (move right)
+        if self.moving_left and self.rect.left > 0: # stop if out of border
+           self.center -= self.ai_settings.ship_speed_factor # decremet x-coordinate (move left)
+        # After self.center is made of decimal type, we use the new value to
+        # update self.rect.centerx, which controls the position of the ship y. 
+        # Though only the integer portion of self.center will be stored in self.rect.centerx, 
+        # but that’s fine for displaying the ship.           
+        self.rect.centerx = self.center # Update rect object from self.center.
     #--------------------------------------------------------------------------------    
     def blitme(self): # Draw the ship at its current location. 
         self.screen.blit(self.image, self.rect)
