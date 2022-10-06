@@ -20,3 +20,22 @@ class Settings():
         self.bullet_height = 15
         self.bullet_color = 60, 60, 60
         self.bullets_allowed = 3 # Limit to three bullets at a time.
+        # Alien settings
+        self.alien_speed_factor = 1  
+        '''
+        The setting fleet_drop_speed controls how quickly the fleet drops down
+        the screen each time an alien reaches either edge. It's helpful to separate
+        this speed from the aliens' horizontal speed so you can adjust the two
+        speeds independently.
+        '''         
+        self.fleet_drop_speed = 10
+        '''
+        To implement the setting fleet_direction, we could use a text value, such
+        as 'left' or 'right', but we'd end up with if-elif statements testing for 
+        the fleet direction. Instead, because we have only two directions to deal with,
+        let's use the values 1 and -1 and switch between them each time the fleet
+        changes direction. (Using numbers also makes sense because moving right
+        involves adding to each alien's x-coordinate value, and moving left involves
+        subtracting from each alien's x-coordinate value.) 
+        '''
+        self.fleet_direction = 1 # 1 = right; -1 = left 

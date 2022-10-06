@@ -18,6 +18,7 @@ from settings import Settings # this file stores code for Settings-class
 from ship import Ship # import file with Ship-class
 import game_functions as gf # stores all the function we're gone use with events in while-loop 
 from pygame.sprite import Group # Group behaves like a list and stores the bullets group
+# from alien import Alien # no need, cause we're no longer creating aliens directly here
 #=========================================================================================
 # Alien Invasion starts as the function run_game().
 def run_game():   
@@ -34,14 +35,20 @@ def run_game():
     game, like the aliens or the ship, is a surface. The surface returned by
     display.set_mode() represents the entire game window. When we activate
     the game's animation loop, this surface is automatically redrawn on every
-    pass through the loop.
+    pass through the loop. 
     '''
     screen = pygame.display.set_mode((1200, 800)) 
     pygame.display.set_caption("Alien Invasion")
     # Make a ship. We now need also to pass ai_settings as an argument
     ship = Ship(ai_settings, screen)
-    # Make a group to store bullets in.
+    # Make a group to store Bullets in.
     bullets = Group()
+    # Make a group to store Aliens in.   
+    aliens = Group()
+    # Create the fleet of aliens instead of one Alien
+    gf.create_fleet(ai_settings, screen, ship, aliens)
+    # alien = Alien(ai_settings, screen) # no longer need this
+    
     '''
     The game is controlled by a while loop that contains an event loop
     and code that manages screen updates. An event is an action that the user
@@ -52,13 +59,15 @@ def run_game():
     '''
     # Start the main loop for the game.
     while True:
-        # Respond to keypresses and mouse events passig Ship and Bullets-group objects
+        # Respond to keypresses and mouse events passig Ship, 
+        # Alien and Bullets-group objects
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()              # Update Ship images on the screen 
-        gf.update_bullets(bullets) # Update Bullets images on the screen 
-        gf.update_bullets(bullets) # Get rid of bullets that have run behind the screen.
-        gf.update_screen(ai_settings, screen, ship, bullets)              
+        #Update Bullets and get rid of bullets that have run behind the screen.
+        gf.update_bullets(bullets) # Update Bullets images on the screen
+        gf.update_aliens(ai_settings, aliens) # Update Bullets images on the screen 
+        gf.update_screen(ai_settings, screen, ship, aliens, bullets)          
 #=========================================================================================
-# Run MAIN function that STARTS GAME    
+# Run MAIN function that STARTS GAME     
 run_game()
 #=========================================================================================

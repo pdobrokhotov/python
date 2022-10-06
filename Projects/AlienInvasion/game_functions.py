@@ -7,6 +7,7 @@ from other aspects of the game, like updating the screen
 import sys
 import pygame
 from bullet import Bullet
+from alien import Alien
 #=======================================================================================
 # Respond to Key-PRESS event.
 def check_keydown_events(event, ai_settings, screen, ship, bullets): 
@@ -51,7 +52,7 @@ def check_events(ai_settings, screen, ship, bullets):
         '''   
 #=======================================================================================     
 # Update images on the screen and flip to the new screen.                
-def update_screen(ai_settings, screen, ship, bullets): 
+def update_screen(ai_settings, screen, ship, aliens, bullets):
     # Fill the screen with the background color dfined as RGB() which takes only one argument: a color.
     screen.fill(ai_settings.bg_color) # Redraw the screen during each pass through the loop.
     '''
@@ -64,6 +65,12 @@ def update_screen(ai_settings, screen, ship, bullets):
         bullet.draw_bullet()
     # Now Render ship in the screen and Make the most recently drawn screen visible. 
     ship.blitme()                     # Render ship in the screen
+    '''
+    When you call draw() on a group, Pygame automatically draws each element
+    in the group at the position defined by its rect attribute. In this case,
+    aliens.draw(screen) draws each alien in the group to the screen.
+    '''
+    aliens.draw(screen)               # Render Group of Aliens in the screen
     pygame.display.flip()             # Make the most recently drawn screen visible.
 #===================================================================================
 # Update position of bullets and get rid of old bullets. 
@@ -89,4 +96,124 @@ def update_bullets(bullets):
     When you call update() on a group, the group automatically calls
     update() for each sprite in the group. The line bullets.update() calls
     bullet.update() for each bullet we place in the group bullets       
-    '''  
+    '''
+#=================================================================================== 
+# Create a full fleet of aliens.
+def create_fleet(ai_settings, screen, ship, aliens):
+    # Create an alien and find the number of aliens in a row.
+    # Spacing between each alien is equal to one alien width. 
+    '''
+    We've already thought through most of this code. We need to know the
+    alien's width and height in order to place aliens, so we create an alien
+    before we perform calculations. This alien won't be part of the fleet, so we
+    don't add it to the group aliens.  
+    The definition of create_fleet() also has a new parameter for the ship object, 
+    which means we need to include the ship argument in the call to create_fleet() 
+    in alien_invasion.py : gf.create_fleet(ai_settings, screen, ship, aliens) 
+    '''
+    alien = Alien(ai_settings, screen)
+    # Get number of Aliens that can fit into the screen in X-Axis
+    number_aliens_x = get_number_aliens_x(ai_settings, alien.rect.width)
+    # Get number of Aliens that can fit into the screen in Y-Axis
+    number_rows = get_number_rows(ai_settings, ship.rect.height, alien.rect.height)
+    # To create multiple rows, we use two nested loops: one outer loop Y
+    # and one inner loop X. The inner loop creates the aliens in one row. 
+    # The outer loop counts from 0 to the number of rows we want; 
+    for row_number in range(number_rows):
+        for alien_number in range(number_aliens_x):
+            create_alien(ai_settings, screen, aliens, alien_number,row_number)    
+ 
+#===================================================================================
+# Determine the number of aliens that fit in a row. 
+def get_number_aliens_x(ai_settings, alien_width):
+    '''
+    Calculate the horizontal space available for aliens and the number 
+    of aliens that can fit into that space. The only change here from 
+    our original formulas is that we're using int() to ensure we end up 
+    with an integer number of aliens. The only change here from our original
+    formulas is that we're using int() to ensure we end up with an integer 
+    number of aliens x because  we don't want to create partial aliens, 
+    and the range() function needs an integer. The int() function drops 
+    the decimal part of a number, effectively rounding down.
+    (This is helpful  because we'd rather have a little extra space 
+    in each row than an overly crowded row.) 
+    '''
+    available_space_x = ai_settings.screen_width - 2 * alien_width
+    # We use int() to ensure we end up with an integer number of aliens
+    number_aliens_x = int(available_space_x / (2 * alien_width))
+    return number_aliens_x
+#===================================================================================
+# Create an alien and place it in the row. 
+       
+def create_alien(ai_settings, screen, aliens, alien_number, row_number):
+    alien = Alien(ai_settings, screen)
+    '''
+    Note, that here we also change an alien's y-coordinate value when it's
+    not in the first row by starting with one alien's height to create empty space
+    at the top of the screen. Each row starts two alien heights below the last row,
+    so we multiply the alien height by two and then by the row number. The first
+    row number is 0, so the vertical placement of the first row is unchanged. 
+    All subsequent rows are placed farther down the screen.
+    '''
+    # Get the alien's width from its rect attribute and store this value in 
+    # alien_width so we don't have to keep working through the rect attribute.
+    # Each alien is pushed to the right one alien width from the left margin    
+    alien_width = alien.rect.width
+    # Set its x-coordinate value to place it in the row
+    '''
+    To acheve this we multiply the alien width by 2 to account for the space 
+    each alien takes up,including the empty space to its right, and we multiply
+    this amount by the alien's position in the row. Then we add each new alien 
+    to the group aliens. 
+    '''
+    alien.x = alien_width + 2 * alien_width * alien_number
+    alien.rect.x = alien.x
+    alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+    aliens.add(alien) 
+#===================================================================================
+#  Determine the number of rows of aliens that fit on the screen.   
+def get_number_rows(ai_settings, ship_height, alien_height):
+    available_space_y = (ai_settings.screen_height - (3 * alien_height) - ship_height)
+    number_rows = int(available_space_y / (2 * alien_height))
+    return number_rows
+#===================================================================================
+# Update the postions of all aliens in the fleet. 
+def update_aliens(aliens):
+    '''
+    We use the update() method on the aliens group, which automatically
+    calls each alien's update() method. When you run Alien Invasion now, you
+    should see the fleet move right and disappear off the side of the screen  
+    '''
+    aliens.update()
+#===================================================================================
+# Respond appropriately if any aliens have reached an edge."""
+def check_fleet_edges(ai_settings, aliens):
+    for alien in aliens.sprites():
+        if alien.check_edges():
+            change_fleet_direction(ai_settings, aliens)
+            break
+    '''
+    Here we loop through the fleet and call check_edges() on each alien.
+     If check_edges() returns True, we know an alien is at an edge and
+    the whole fleet needs to change direction, so we call change_fleet_direction()
+    and break out of the loop. In change_fleet_direction(), we loop through all
+    the aliens and drop each one using the setting fleet_drop_speed. Then we  
+    change the value of fleet_direction by multiplying its current value by -1.
+    '''
+#===================================================================================
+# Drop the entire fleet and change the fleet's direction. 
+def change_fleet_direction(ai_settings, aliens):
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    # After dropping above change direction to the left by multiplying to (=-1)
+    ai_settings.fleet_direction *= -1
+#===================================================================================
+# Check if the fleet is at an edge, and then update 
+# the postions of all aliens in the fleet.
+def update_aliens(ai_settings, aliens):
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+#===================================================================================
+#===================================================================================
+#===================================================================================
+#===================================================================================
