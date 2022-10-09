@@ -209,7 +209,7 @@ def update_aliens(ai_settings, ship, aliens):
     # Look for alien-ship collisions.
     '''
     The method spritecollideany() takes two arguments: a sprite and a
-    group. The method looks for any member of the group that’s collided with
+    group. The method looks for any member of the group that''s collided with
     the sprite and stops looping through the group as soon as it finds one member
     that has collided with the sprite. Here, it loops through the group aliens
     and returns the first alien it finds that has collided with ship. If no collisions 

@@ -40,4 +40,4 @@ class Settings():
         '''
         self.fleet_direction = 1 # 1 = right; -1 = left 
         # Speed up bullets
-        # self.bullet_speed_factor = 3
+        #self.bullet_speed_factor = 3
