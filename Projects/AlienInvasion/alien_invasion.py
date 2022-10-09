@@ -63,8 +63,9 @@ def run_game():
         # Alien and Bullets-group objects
         gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()              # Update Ship images on the screen 
-        #Update Bullets and get rid of bullets that have run behind the screen.
-        gf.update_bullets(aliens, bullets) # Update Bullets images on the screen
+        # Update Bullets and get rid of bullets that have run behind the screen.
+        # Update Bullets images on the screen
+        gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
         gf.update_aliens(ai_settings, aliens) # Update Bullets images on the screen 
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)          
 #=========================================================================================

@@ -74,7 +74,7 @@ def update_screen(ai_settings, screen, ship, aliens, bullets):
     pygame.display.flip()             # Make the most recently drawn screen visible.
 #===================================================================================
 # Update position of bullets and get rid of old bullets. 
-def update_bullets(aliens, bullets):
+def update_bullets(ai_settings, screen, ship, aliens, bullets):
     # Get rid of bullets that have run behind the screen.
     # If we DO NOT do this the'll still continue running and take memory
     # We shouldn’t remove items from a list or group within a for loop, so
@@ -89,6 +89,8 @@ def update_bullets(aliens, bullets):
         if bullet.rect.bottom <= 0:
            bullets.remove(bullet)
         #  print(len(bullets))
+    # Respond to bullet-alien collisions.
+    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
     '''
     We pass bullets to check_events() and update_screen(). We'll need to work
     with bullets in check_events() when the spacebar is pressed, and we'll need
@@ -96,7 +98,10 @@ def update_bullets(aliens, bullets):
     When you call update() on a group, the group automatically calls
     update() for each sprite in the group. The line bullets.update() calls
     bullet.update() for each bullet we place in the group bullets       
-    '''
+    '''   
+#===================================================================================
+# Respond to bullet-alien collisions. 
+def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):   
     # Check for any bullets that have hit aliens. 
     # If so, get rid of the bullet and the alien.
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
@@ -110,10 +115,8 @@ def update_bullets(aliens, bullets):
     # If the group aliens is empty destroy existing bullets and create new fleet.
     if len(aliens) == 0:
         bullets.empty()
-        create_fleet(ai_settings, screen, ship, aliens)   
-    
-    
-    
+        create_fleet(ai_settings, screen, ship, aliens)  
+        
 #=================================================================================== 
 # Create a full fleet of aliens.
 def create_fleet(ai_settings, screen, ship, aliens):
@@ -202,6 +205,7 @@ def update_aliens(aliens):
     should see the fleet move right and disappear off the side of the screen  
     '''
     aliens.update()
+
 #===================================================================================
 # Respond appropriately if any aliens have reached an edge."""
 def check_fleet_edges(ai_settings, aliens):

@@ -39,3 +39,5 @@ class Settings():
         subtracting from each alien's x-coordinate value.) 
         '''
         self.fleet_direction = 1 # 1 = right; -1 = left 
+        # Speed up bullets
+        self.bullet_speed_factor = 3
