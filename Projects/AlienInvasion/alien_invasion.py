@@ -66,7 +66,10 @@ def run_game():
         # Update Bullets and get rid of bullets that have run behind the screen.
         # Update Bullets images on the screen
         gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
-        gf.update_aliens(ai_settings, aliens) # Update Bullets images on the screen 
+        # Update Bullets images on the screen 
+        #gf.update_aliens(ai_settings, ship, aliens)
+        gf.update_aliens(ai_settings,aliens)        
+        # Update all objects on the screen 
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)          
 #=========================================================================================
 # Run MAIN function that STARTS GAME     
