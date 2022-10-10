@@ -22,4 +22,7 @@ class GameStats():
     # reset_stats() any time the player starts a new game.  
     def reset_stats(self):
         self.ships_left = self.ai_settings.ship_limit
+        # To reset the score each time a new game starts, we initialize score in
+        # here rather than __init__().
+        self.score = 0
     #===============================================================================  

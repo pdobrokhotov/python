@@ -49,6 +49,8 @@ class Settings():
         subtracting from each alien's x-coordinate value.) 
         '''
         self.fleet_direction = 1 # 1 = right; -1 = left
+         # Scoring
+        self.alien_points = 1
     #===========================================================================   
     # Increase speed settings.       
     def increase_speed(self):

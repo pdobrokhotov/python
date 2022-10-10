@@ -85,7 +85,7 @@ def check_play_button(ai_settings, screen, stats, play_button,
 
 #=======================================================================================     
 # Update images on the screen and flip to the new screen.                
-def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
+def update_screen(ai_settings, screen, stats, sb, ship, aliens, bullets, play_button):
     # Fill the screen with the background color dfined as RGB() which takes only one argument: a color.
     screen.fill(ai_settings.bg_color) # Redraw the screen during each pass through the loop.
     '''
@@ -104,7 +104,9 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
     aliens.draw(screen) draws each alien in the group to the screen.
     '''
     # Render Group of Aliens in the screen
-    aliens.draw(screen)              
+    aliens.draw(screen)   
+    # Draw the score information.
+    sb.show_score()           
     # Draw the play button only if the game is inactive. To make the Play button 
     # visible above all other elements on the screen,draw it after all other game
     # elements have been drawn and before flipping to a new screen
@@ -113,8 +115,7 @@ def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button
      # Make the most recently drawn screen visible.    
     pygame.display.flip()            
 #===================================================================================
-# Update position of bullets and get rid of old bullets. 
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     # Get rid of bullets that have run behind the screen.
     # If we DO NOT do this the'll still continue running and take memory
     # We shouldn’t remove items from a list or group within a for loop, so
@@ -130,7 +131,7 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
            bullets.remove(bullet)
         #  print(len(bullets))
     # Respond to bullet-alien collisions.
-    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
+    check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship, aliens, bullets)
     '''
     We pass bullets to check_events() and update_screen(). We'll need to work
     with bullets in check_events() when the spacebar is pressed, and we'll need
@@ -141,10 +142,16 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
     '''   
 #===================================================================================
 # Respond to bullet-alien collisions. 
-def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):   
+def check_bullet_alien_collisions(ai_settings, screen, stats, 
+                                  sb, ship, aliens, bullets):    
     # Check for any bullets that have hit aliens. 
     # If so, get rid of the bullet and the alien.
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    # Update ScoreBoard image on screen (= sb)
+    if collisions:
+        stats.score += ai_settings.alien_points
+        # create a new image for the updated score.
+        sb.prep_score()
     '''
     The new line we added loops through each bullet in the group bullets and
     then loops through each alien in the group aliens. Whenever the rects of 
@@ -208,7 +215,6 @@ def get_number_aliens_x(ai_settings, alien_width):
     return number_aliens_x
 #===================================================================================
 # Create an alien and place it in the row. 
-       
 def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     alien = Alien(ai_settings, screen)
     '''
