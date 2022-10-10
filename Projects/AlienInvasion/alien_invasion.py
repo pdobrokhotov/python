@@ -80,7 +80,7 @@ def run_game():
         # Respond to keypresses and mouse events passig Ship, Alien
         # Bullets-group objects and etc.
         gf.check_events(ai_settings, screen, stats, play_button, ship,aliens, bullets)
-        # The code below is needed only if the gane is active
+        # The code below is needed only if the game is active
         if stats.game_active:
             ship.update() # Update Ship images on the screen 
             # Update Bullets and get rid of bullets that have run behind the screen.

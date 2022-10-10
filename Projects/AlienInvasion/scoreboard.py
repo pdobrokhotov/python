@@ -17,8 +17,15 @@ class Scoreboard():
     #=============================================================
     # Turn the score into a rendered image.
     def prep_score(self):
-        # turn the numerical value stats.score into a string
-        score_str = str(self.stats.score) 
+        # Turn the numerical value stats.score into a string. 
+        # But we better round the score to the nearst 10,100,100 etc,
+        # because it can be multiplied by coeff if we reach new level 
+        # and game speed increases
+        # score_str = str(self.stats.score) # instead of this line we use 2 lines below
+        rounded_score = int(round(self.stats.score, -1))
+        score_str = "{:,}".format(rounded_score) # insert commas into numbers  
+        
+        
         # Create the image based on score-string above and display it
         # at the top right of the screen. To display it clearly onscreen, 
         # we pass the screen’s background color to render() 

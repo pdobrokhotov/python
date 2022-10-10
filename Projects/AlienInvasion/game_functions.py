@@ -148,8 +148,22 @@ def check_bullet_alien_collisions(ai_settings, screen, stats,
     # If so, get rid of the bullet and the alien.
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     # Update ScoreBoard image on screen (= sb)
+    '''
+    Note, that if two bullets collide with aliens during the same pass through 
+    the loop or if we make an extra wide bullet to hit multiple aliens, the player 
+    will receive points only for one of the aliens killed. To fix this, let's refine
+    the way that alien bullet collisions are detected. Below a bullet that collides 
+    with an alien becomes a key in the collisions dictionary. The value associated 
+    with each bullet is a list of aliens it has collided with. Thus, We have to loop 
+    through the collisions dictionary to make sure we award points for each alien hit 
+    Remember that each value is a list of aliens hit by a single bullet. 
+    We multiply the value of each alien by the number of aliens in each 
+    list and add this amount to the current score. 
+    '''
+
     if collisions:
-        stats.score += ai_settings.alien_points
+        for aliens in collisions.values():
+            stats.score += ai_settings.alien_points * len(aliens)
         # create a new image for the updated score.
         sb.prep_score()
     '''
