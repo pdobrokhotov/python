@@ -19,6 +19,7 @@ from ship import Ship # import file with Ship-class
 import game_functions as gf # stores all the function we're gone use with events in while-loop 
 from pygame.sprite import Group # Group behaves like a list and stores the bullets group
 from game_stats import GameStats # import file with GameStatics Class
+from button import Button # import file with Button Class
 #=========================================================================================
 # Alien Invasion starts as the function run_game().
 def run_game():   
@@ -39,6 +40,9 @@ def run_game():
     '''
     screen = pygame.display.set_mode((1200, 800)) 
     pygame.display.set_caption("Alien Invasion")
+    # Render the Play button.
+    play_button = Button(ai_settings, screen, "Play")
+    
     # Create an instance to store game statistics.
     stats = GameStats(ai_settings)
     # Make a ship. We now need also to pass ai_settings as an argument
@@ -70,9 +74,9 @@ def run_game():
     is inactive, we don't need to update the positions of game elements.  
     '''
     while True:
-        # Respond to keypresses and mouse events passig Ship, 
-        # Alien and Bullets-group objects
-        gf.check_events(ai_settings, screen, ship, bullets)
+        # Respond to keypresses and mouse events passig Ship, Alien
+        # Bullets-group objects and etc
+        gf.check_events(ai_settings, screen, stats, play_button, ship,aliens, bullets)
         # The code below is needed only if the gane is active
         if stats.game_active:
             ship.update() # Update Ship images on the screen 
@@ -82,7 +86,7 @@ def run_game():
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
             
         # Update all objects on the screen 
-        gf.update_screen(ai_settings, screen, ship, aliens, bullets)          
+        gf.update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button)        
 #=========================================================================================
 # Run MAIN function that STARTS GAME     
 run_game()

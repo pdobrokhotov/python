@@ -35,7 +35,8 @@ def check_keyup_events(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 #=======================================================================================
-def check_events(ai_settings, screen, ship, bullets):
+# def check_events(ai_settings, screen, ship, bullets):
+def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
     # Respond to keypresses and mouse events. Watch for keyboard and mouse events. 
     # Each event is picked up by the pygame.event.get() method
     # Each keypress is registered as a KEYDOWN event. Clos button-click is QUIT-event
@@ -46,15 +47,45 @@ def check_events(ai_settings, screen, ship, bullets):
             check_keydown_events(event, ai_settings, screen, ship, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+             mouse_x, mouse_y = pygame.mouse.get_pos()
+             check_play_button(ai_settings, screen, stats, play_button, ship,
+                               aliens, bullets, mouse_x, mouse_y)
         '''
         If a KEYDOWN event occurs for the K_LEFT key, we set moving_left to True. If
         a KEYUP event occurs for the K_LEFT key, we set moving_left to False. We can
         use elif blocks here because each event is connected to only one key. If the
         player presses both keys at once, two separate events will be detected.      
-        '''   
+        ''' 
+#=======================================================================================
+# Start a new game when the player clicks Play. 
+def check_play_button(ai_settings, screen, stats, play_button, 
+                      ship, aliens, bullets, mouse_x, mouse_y):
+    # The button region on the screen will continue to respond to clicks 
+    # even when the Play button isn’t visible.So prevent this using IF-clause
+    button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y) 
+    # Variable "button_clicked" stores a True or False value and the game will
+    # restart only if Play is clicked and the game is not currently active
+    if button_clicked and not stats.game_active:
+        # Reset dynamic game settings like game speed which we encrease
+        ai_settings.initialize_dynamic_settings()
+        # Hide the mouse cursor when game starts
+        # We will make it visible again in function ship_hit() below
+        # i.e. when the game ends and we have to push Start Button
+        pygame.mouse.set_visible(False)
+        # Reset the game statistics.
+        stats.reset_stats()
+        stats.game_active = True
+        # Empty the list of aliens and bullets.
+        aliens.empty()
+        bullets.empty()
+        # Create a new fleet and center the ship.
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+
 #=======================================================================================     
 # Update images on the screen and flip to the new screen.                
-def update_screen(ai_settings, screen, ship, aliens, bullets):
+def update_screen(ai_settings, screen, stats, ship, aliens, bullets, play_button):
     # Fill the screen with the background color dfined as RGB() which takes only one argument: a color.
     screen.fill(ai_settings.bg_color) # Redraw the screen during each pass through the loop.
     '''
@@ -72,8 +103,15 @@ def update_screen(ai_settings, screen, ship, aliens, bullets):
     in the group at the position defined by its rect attribute. In this case,
     aliens.draw(screen) draws each alien in the group to the screen.
     '''
-    aliens.draw(screen)               # Render Group of Aliens in the screen
-    pygame.display.flip()             # Make the most recently drawn screen visible.
+    # Render Group of Aliens in the screen
+    aliens.draw(screen)              
+    # Draw the play button only if the game is inactive. To make the Play button 
+    # visible above all other elements on the screen,draw it after all other game
+    # elements have been drawn and before flipping to a new screen
+    if not stats.game_active:         
+        play_button.draw_button()
+     # Make the most recently drawn screen visible.    
+    pygame.display.flip()            
 #===================================================================================
 # Update position of bullets and get rid of old bullets. 
 def update_bullets(ai_settings, screen, ship, aliens, bullets):
@@ -117,6 +155,10 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
     # If the group aliens is empty destroy existing bullets and create new fleet.
     if len(aliens) == 0:
         bullets.empty()
+        # Increase game's speed tempo   when the last alien in a fleet has been
+        # shot down but before creating a new fleet:
+        ai_settings.increase_speed()
+        # Create aliens fleet
         create_fleet(ai_settings, screen, ship, aliens)  
         
 #=================================================================================== 
@@ -263,6 +305,9 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         sleep(0.5)
     else:
         stats.game_active = False
+        # Because in function check_play_button above we make sursor invisible
+        # when starting the game, here we must makr it visible again
+        pygame.mouse.set_visible(True)
         
     '''
     Notice that we never make more than one ship; we make only one ship instance for the

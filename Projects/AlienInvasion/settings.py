@@ -8,20 +8,22 @@ settings throughout our files.
 '''
 #A class to store all settings for Alien Invasion.
 class Settings():  
-    def __init__(self): #Initialize the game's settings." 
+    #===========================================================================
+    # "Initialize the game's static settings. 
+    def __init__(self): 
         # Screen settings
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (230, 230, 230)
-        self.ship_speed_factor = 1.5 # Adjust position by 1.5 pixels rather than 1 pixel
+       # Limit number of Ships
+        self.ship_limit = 3
         # Bullet settings
         self.bullet_speed_factor = 1
         self.bullet_width = 15 # Try 300 The bullet will be like a horizontal line
         self.bullet_height = 15
         self.bullet_color = 60, 60, 60
         self.bullets_allowed = 3 # Limit to three bullets at a time.
-        # Alien settings
-        self.alien_speed_factor = 1  
+
         '''
         The setting fleet_drop_speed controls how quickly the fleet drops down
         the screen each time an alien reaches either edge. It's helpful to separate
@@ -29,6 +31,14 @@ class Settings():
         speeds independently.
         '''         
         self.fleet_drop_speed = 10
+        self.speedup_scale = 1.1   # How quickly the game speeds up
+        self.initialize_dynamic_settings() 
+    #===========================================================================   
+    # Initialize settings that change throughout the game.     
+    def initialize_dynamic_settings(self):
+        self.ship_speed_factor = 1.5 # Adjust position by 1.5 pixels rather than 1 pixel
+        self.bullet_speed_factor = 3
+        self.alien_speed_factor = 1 
         '''
         To implement the setting fleet_direction, we could use a text value, such
         as 'left' or 'right', but we'd end up with if-elif statements testing for 
@@ -38,9 +48,10 @@ class Settings():
         involves adding to each alien's x-coordinate value, and moving left involves
         subtracting from each alien's x-coordinate value.) 
         '''
-        self.fleet_direction = 1 # 1 = right; -1 = left 
-        # Speed up bullets
-        self.bullet_speed_factor = 3
-        # Limit number of Ships
-        self.ship_limit = 3
-        
+        self.fleet_direction = 1 # 1 = right; -1 = left
+    #===========================================================================   
+    # Increase speed settings.       
+    def increase_speed(self):
+        self.ship_speed_factor   *= self.speedup_scale
+        self.bullet_speed_factor *= self.speedup_scale
+        self.alien_speed_factor  *= self.speedup_scale 
