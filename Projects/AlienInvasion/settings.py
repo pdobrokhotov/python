@@ -41,3 +41,6 @@ class Settings():
         self.fleet_direction = 1 # 1 = right; -1 = left 
         # Speed up bullets
         self.bullet_speed_factor = 3
+        # Limit number of Ships
+        self.ship_limit = 3
+        

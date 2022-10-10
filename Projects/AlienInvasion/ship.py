@@ -1,3 +1,4 @@
+import pygame
 '''
 To use our ship, we'll write a module called ship, which contains the class Ship. 
 This class will manage most of the behavior of the player's ship.
@@ -16,12 +17,10 @@ When working with a rect object, you can use the x- and y-coordinates
 of the top, bottom, left, and right edges of the rectangle, as well as the
 center. You can set any of these values to determine the current position
 of the rect.
+==========================================================================
 '''
-import pygame
-
-#====================================================================================
 class Ship():
-    #--------------------------------------------------------------------------------
+    #==============================================================================
     def __init__(self, ai_settings, screen): # Initialize the ship and set its starting position. 
         self.screen = screen
         self.ai_settings = ai_settings # turn this parameter into an attribute, so we can use it in update()
@@ -52,7 +51,7 @@ class Ship():
         attributes spare you from having to do calculations that game developers
         formerly had to do manually, and you'll find you'll use them often    
         '''
-    #--------------------------------------------------------------------------------
+    #==============================================================================
     def update(self): # Update the ship's position based on the movement flag. 
         # Update the ship's self.center value, not the self.rect.centerx as was before. !!!
         # Also check not to run behind the screen borders both in the right and left positions
@@ -65,25 +64,32 @@ class Ship():
         # Though only the integer portion of self.center will be stored in self.rect.centerx, 
         # but that’s fine for displaying the ship.           
         self.rect.centerx = self.center # Update rect object from self.center.
-    #--------------------------------------------------------------------------------    
+    #==============================================================================
     def blitme(self): # Draw the ship at its current location. 
         self.screen.blit(self.image, self.rect)
         
-'''
-When working with a rect object, you can use the x- and y-coordinates
-of the top, bottom, left, and right edges of the rectangle, as well as the
-center. You can set any of these values to determine the current position
-of the rect.
-When you're centering a game element, work with the center, centerx, or
-centery attributes of a rect. When you're working at an edge of the screen,
-work with the top, bottom, left, or right attributes. When you're adjusting
-the horizontal or vertical placement of the rect, you can just use the x and
-y attributes, which are the x- and y-coordinates of its top-left corner. These
-attributes spare you from having to do calculations that game developers
-formerly had to do manually, and you'll find you'll use them often
------------------------ NOTE -------------------------------------------------
-In Pygame, the origin (0, 0) is at the top-left corner of the screen, and coordinates
-increase as you go down and to the right. On a 1200 by 800 screen, the origin is at
-the top-left corner, and the bottom-right corner has the coordinates (1200, 800).
---------------------------------------------------------------------------------
-'''
+    '''
+    When working with a rect object, you can use the x- and y-coordinates
+    of the top, bottom, left, and right edges of the rectangle, as well as the
+    center. You can set any of these values to determine the current position
+    of the rect.
+    When you're centering a game element, work with the center, centerx, or
+    centery attributes of a rect. When you're working at an edge of the screen,
+    work with the top, bottom, left, or right attributes. When you're adjusting
+    the horizontal or vertical placement of the rect, you can just use the x and
+    y attributes, which are the x- and y-coordinates of its top-left corner. These
+    attributes spare you from having to do calculations that game developers
+    formerly had to do manually, and you'll find you'll use them often
+    ----------------------- NOTE -------------------------------------------------
+    In Pygame, the origin (0, 0) is at the top-left corner of the screen, and coordinates
+    increase as you go down and to the right. On a 1200 by 800 screen, the origin is at
+    the top-left corner, and the bottom-right corner has the coordinates (1200, 800).
+    --------------------------------------------------------------------------------
+    '''
+    #==============================================================================
+    # Center the ship on the screen. To center the ship, we set the value of the 
+    # ship's center attribute to match the center of the screen, which we get 
+    # through the screen_rect attribute. This attribute can be used for setting
+    # object's positin like we did it earlier: self.rect.centerx = self.center
+    def center_ship(self):
+        self.center = self.screen_rect.centerx

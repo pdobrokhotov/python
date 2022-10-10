@@ -5,9 +5,11 @@ Isolating the event loop allows you to manage events separately
 from other aspects of the game, like updating the screen
 '''
 import sys
+from time import sleep
 import pygame
 from bullet import Bullet
 from alien import Alien
+
 #=======================================================================================
 # Respond to Key-PRESS event.
 def check_keydown_events(event, ai_settings, screen, ship, bullets): 
@@ -198,8 +200,7 @@ def get_number_rows(ai_settings, ship_height, alien_height):
     return number_rows
 #===================================================================================
 # Update the postions of all aliens in the fleet.
-#def update_aliens(ai_settings, aliens):
-def update_aliens(ai_settings, ship, aliens): # gives error
+def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     '''
     We use the update() method on the aliens group, which automatically
     calls each alien's update() method. When you run Alien Invasion now, you
@@ -217,7 +218,13 @@ def update_aliens(ai_settings, ship, aliens): # gives error
     occur, spritecollideany() returns None and the if block won't execute
     '''
     if pygame.sprite.spritecollideany(ship, aliens):
-        print("Ship hit!!!")
+        #print("Ship hit!!!")
+        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+        
+    # Look for aliens hitting the bottom of the screen.
+    # We call check_aliens_bottom() after updating the positions of all 
+    # the aliens and after looking for alien-ship collisions
+    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)    
 #===================================================================================
 # Respond appropriately if any aliens have reached an edge."""
 def check_fleet_edges(ai_settings, aliens):
@@ -227,7 +234,7 @@ def check_fleet_edges(ai_settings, aliens):
             break
     '''
     Here we loop through the fleet and call check_edges() on each alien.
-     If check_edges() returns True, we know an alien is at an edge and
+    If check_edges() returns True, we know an alien is at an edge and
     the whole fleet needs to change direction, so we call change_fleet_direction()
     and break out of the loop. In change_fleet_direction(), we loop through all
     the aliens and drop each one using the setting fleet_drop_speed. Then we  
@@ -241,7 +248,41 @@ def change_fleet_direction(ai_settings, aliens):
     # After dropping above change direction to the left by multiplying to (=-1)
     ai_settings.fleet_direction *= -1
 #===================================================================================
+# Respond to ship being hit by alien. 
+def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+    if stats.ships_left > 0:
+        # Decrement ships_left.
+        stats.ships_left -= 1
+        # Empty the list of aliens and bullets.
+        aliens.empty()
+        bullets.empty()
+        # Create a new fleet and center the ship.
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
+        # Pause.
+        sleep(0.5)
+    else:
+        stats.game_active = False
+        
+    '''
+    Notice that we never make more than one ship; we make only one ship instance for the
+    whole game and recenter it whenever the ship has been hit. The statistic ships_left
+    will tell us when the player has run out of ships.
+    '''
 #===================================================================================
+# Check if any aliens have reached the bottom of the screen.
+# An alien reaches the bottom when its rect.bottom value is greater 
+# than or equal to the screen’s rect.bottom attribute
+# If so treat the same as if Ship was hit
+def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            # Treat this the same as if the ship got hit.
+            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            break
+
+
 #===================================================================================
 #===================================================================================
 #===================================================================================

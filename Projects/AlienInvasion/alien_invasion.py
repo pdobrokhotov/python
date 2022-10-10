@@ -18,7 +18,7 @@ from settings import Settings # this file stores code for Settings-class
 from ship import Ship # import file with Ship-class
 import game_functions as gf # stores all the function we're gone use with events in while-loop 
 from pygame.sprite import Group # Group behaves like a list and stores the bullets group
-# from alien import Alien # no need, cause we're no longer creating aliens directly here
+from game_stats import GameStats # import file with GameStatics Class
 #=========================================================================================
 # Alien Invasion starts as the function run_game().
 def run_game():   
@@ -39,6 +39,8 @@ def run_game():
     '''
     screen = pygame.display.set_mode((1200, 800)) 
     pygame.display.set_caption("Alien Invasion")
+    # Create an instance to store game statistics.
+    stats = GameStats(ai_settings)
     # Make a ship. We now need also to pass ai_settings as an argument
     ship = Ship(ai_settings, screen)
     # Make a group to store Bullets in.
@@ -58,17 +60,27 @@ def run_game():
     of event that occurred. The for loop at x is an event loop.  
     '''
     # Start the main loop for the game.
+    '''
+    Note, that we always need to call check_events(), even if the game
+    is inactive. For example, we still need to know if the user presses Q to quit
+    the game or clicks the button to close the window. We also continue updating
+    the screen so we can make changes to the screen while waiting to see
+    whether the player chooses to start a new game. The rest of the function
+    calls only need to happen when the game is active, because when the game
+    is inactive, we don't need to update the positions of game elements.  
+    '''
     while True:
         # Respond to keypresses and mouse events passig Ship, 
         # Alien and Bullets-group objects
         gf.check_events(ai_settings, screen, ship, bullets)
-        ship.update()              # Update Ship images on the screen 
-        # Update Bullets and get rid of bullets that have run behind the screen.
-        # Update Bullets images on the screen
-        gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
-        # Update Bullets images on the screen 
-        gf.update_aliens(ai_settings, ship, aliens)
-        #gf.update_aliens(ai_settings,  ship, aliens)   # gives Error      
+        # The code below is needed only if the gane is active
+        if stats.game_active:
+            ship.update() # Update Ship images on the screen 
+            # Update Bullets and get rid of bullets that have run behind the screen.
+            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            # Update Aliens' images on the screen 
+            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
+            
         # Update all objects on the screen 
         gf.update_screen(ai_settings, screen, ship, aliens, bullets)          
 #=========================================================================================
