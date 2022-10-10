@@ -198,8 +198,8 @@ def get_number_rows(ai_settings, ship_height, alien_height):
     return number_rows
 #===================================================================================
 # Update the postions of all aliens in the fleet.
-def update_aliens(ai_settings, aliens):
-#def update_aliens(ai_settings, ship, aliens): # gives error
+#def update_aliens(ai_settings, aliens):
+def update_aliens(ai_settings, ship, aliens): # gives error
     '''
     We use the update() method on the aliens group, which automatically
     calls each alien's update() method. When you run Alien Invasion now, you
@@ -216,8 +216,8 @@ def update_aliens(ai_settings, aliens):
     and returns the first alien it finds that has collided with ship. If no collisions 
     occur, spritecollideany() returns None and the if block won't execute
     '''
-    #if pygame.sprite.spritecollideany(ship, aliens):
-    #    print("Ship hit!!!")
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print("Ship hit!!!")
 #===================================================================================
 # Respond appropriately if any aliens have reached an edge."""
 def check_fleet_edges(ai_settings, aliens):
@@ -241,11 +241,6 @@ def change_fleet_direction(ai_settings, aliens):
     # After dropping above change direction to the left by multiplying to (=-1)
     ai_settings.fleet_direction *= -1
 #===================================================================================
-# Check if the fleet is at an edge, and then update 
-# the postions of all aliens in the fleet.
-def update_aliens(ai_settings, aliens):
-    check_fleet_edges(ai_settings, aliens)
-    aliens.update()
 #===================================================================================
 #===================================================================================
 #===================================================================================
