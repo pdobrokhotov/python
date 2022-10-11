@@ -22,6 +22,10 @@ while True:
     # rw = RandomWalk() # no params passed. 5000 points by default
     rw = RandomWalk(50000)
     rw.fill_walk()
+    # Set the size of the plotting window.
+    plt.figure(figsize=(10, 6))
+    # plt.figure(dpi=128, figsize=(10, 6)) # if you know screen resolition
+    #--------------------------------------------------------------
     # Feed the walk's x- and y-values to scatter() and tune chart
     # To color the points according to their position in the walk, 
     # we pass the c argument a list containing the position of each point
