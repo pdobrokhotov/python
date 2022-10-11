@@ -79,15 +79,15 @@ def run_game():
     while True:
         # Respond to keypresses and mouse events passig Ship, Alien
         # Bullets-group objects and etc.
-        gf.check_events(ai_settings, screen, stats, play_button, ship,aliens, bullets)
+        gf.check_events(ai_settings, screen, stats, sb, 
+                        play_button, ship, aliens, bullets)
         # The code below is needed only if the game is active
         if stats.game_active:
             ship.update() # Update Ship images on the screen 
             # Update Bullets and get rid of bullets that have run behind the screen.
             gf.update_bullets(ai_settings, screen, stats, sb, ship, aliens,bullets)
             # Update Aliens' images on the screen 
-            gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
-            
+            gf.update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets)
         # Update all objects on the screen 
         gf.update_screen(ai_settings, screen, stats, sb, ship, aliens,bullets, play_button)       
 #=========================================================================================

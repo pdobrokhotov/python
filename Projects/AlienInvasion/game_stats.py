@@ -14,6 +14,9 @@ class GameStats():
         # Start game in an inactive state ith no way for the
         # player to start it until we make a Play button.
         self.game_active = False 
+        # High score should never be reset.
+        self.high_score = 0
+        self.level = 1
     #===============================================================================    
     # Initialize statistics that can change during the game.W'll initialize 
     # most of the statistics here instead of directly in __init__(). 

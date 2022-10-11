@@ -1,4 +1,7 @@
+# we need this main LIBRARY that has everything for coding our game
 import pygame
+# we need SPRITE to use a GROUP of remained ships rendered at the top of screen
+from pygame.sprite import Sprite  
 '''
 To use our ship, we'll write a module called ship, which contains the class Ship. 
 This class will manage most of the behavior of the player's ship.
@@ -19,9 +22,13 @@ center. You can set any of these values to determine the current position
 of the rect.
 ==========================================================================
 '''
-class Ship():
+# Our ship-class is based on parent class = sprite that allows groups of Ships
+class Ship(Sprite): 
     #==============================================================================
-    def __init__(self, ai_settings, screen): # Initialize the ship and set its starting position. 
+    # Initialize the ship and set its starting position, but make sure it inherits
+    # it's parent (super) class = SPRITE. For this call INIT-method of parent class
+    def __init__(self, ai_settings, screen): 
+        super(Ship, self).__init__() # inherit super class
         self.screen = screen
         self.ai_settings = ai_settings # turn this parameter into an attribute, so we can use it in update()
         #image_ship_path = "D:\My Documents\python\Projects\AlienInvasion\images\ship.bmp" # = absolute path
@@ -39,7 +46,6 @@ class Ship():
         # the rect attrib can store only the integer. Thus to store the ship’s position 
         # accurately, we define new attribute self.center, which can hold decimal values
         self.center = float(self.rect.centerx) # Store a decimal value for the ship's center.
-        
         # Movement flag to distinguish button single PRESS from CONSTANT
         self.moving_right = False # we move right keeping arrow-button pressed
         self.moving_left  = False # we move left keeping  arrow-button pressed
