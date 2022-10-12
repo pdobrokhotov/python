@@ -21,7 +21,7 @@ Chart types. Each example includes source code, so you can see how the
 visualizations are generated.
 ------------------------------------
 Country List module of PYGAL
-To install it run: "pip install pygal_maps_world" 
+To install it run: "pip install pygal_maps_world"
 After install use it like shown below:
 from pygal_maps_world.i18n import COUNTRIES 
 for country_code in sorted(COUNTRIES.keys()):
@@ -33,6 +33,18 @@ After install use it like shown below:
 import pygal
 mm = pygal.maps.world.World()
 ------------------------------------
+To use the API-functionality install [user requests] package
+It allows a Python program to easily request information
+from a website and examine the response that’s returned. 
+To install it run: "pip install --user requests"
+NOTES: When installing you can see the msg below
+  WARNING: The script normalizer.exe is installed in 'C:\Users\1\AppData\Roaming\Python\Python310\Scripts' 
+   which is not on PATH. Consider adding this directory to PATH or,
+   if you prefer to suppress this warning, use --no-warn-script-location.
+In this case see
+https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
+------------------------------------
+
 
 
 
