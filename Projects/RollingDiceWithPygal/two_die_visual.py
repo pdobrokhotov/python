@@ -20,8 +20,6 @@ As we see, when usinf 2 D6-dices the most popular sum of 2 dice = 7 !!!!
 because there are six ways to roll a 7, namely: 1 and 6, 2 and 5, 3 
 and 4, 4 and 3, 5 and 2, or 6 and 1.
 '''
-
-
 #=====================================================
 # Create two D6 dice.
 die_1 = Die()
