@@ -20,6 +20,19 @@ chart types: go to http://www.pygal.org/, click Documentation, and then click
 Chart types. Each example includes source code, so you can see how the
 visualizations are generated.
 ------------------------------------
+Country List module of PYGAL
+To install it run: "pip install pygal_maps_world" 
+After install use it like shown below:
+from pygal_maps_world.i18n import COUNTRIES 
+for country_code in sorted(COUNTRIES.keys()):
+    print(country_code, COUNTRIES[country_code])
+------------------------------------
+Country Map module of PYGAL
+To install it run: "pip install pygal_maps_world"
+After install use it like shown below:
+import pygal
+mm = pygal.maps.world.World()
+------------------------------------
 
 
 
