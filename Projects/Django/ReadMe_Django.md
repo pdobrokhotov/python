@@ -223,6 +223,23 @@ to the Topic model that we just defined.
 --------------------------------------------------------
 NOTE: If you see a message in your browser that the web page is not available, make sure you still have the Django server running in a terminal window. If you don’t, activate a virtual environment and reissue the command :
 > python manage.py runserver
+============================================================
+=============== The Django Shell ===========================
+============================================================
+Now that we’ve entered some data, we can examine that data programmatically
+through an interactive terminal session. This interactive environment is
+called the Django shell, and it’s a great environment for testing and
+troubleshooting your project. Here’s an example of an interactive shell 
+session:
+-----------------------------------------------------------
+> CD "D:\My Documents\python\Projects\Django"
+> ll_env\Scripts\activate
+> (ll_env)Django$ python manage.py shell
+  >>> from learning_logs.models import Topic
+  >>> Topic.objects.all()
+Result on screen : <QuerySet [<Topic: topic 1>, <Topic: topic 2>]>
+============================================================
+
 
 
 

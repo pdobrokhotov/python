@@ -1,10 +1,15 @@
-#Note, that each time we add a new model, run commads below
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Note, that each time we add a new model, 
+# 1) rejister it admin.py. Example: admin.site.register(Topic)
+# 2) run the commads below: 
 #> CD "D:\My Documents\python\Projects\Django" 
 #> ll_env\Scripts\activate
 #----------------------------------------------------------
 #> (ll_env)Django$ python manage.py makemigrations learning_logs
 #> (ll_env)Django$ python manage.py migrate
 #> (ll_env)Django$ python manage.py runserver
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 from django.db import models
 #======================================================
 # Create your models here.
@@ -26,6 +31,7 @@ and time whenever the user creates a new topic.To see the different
 kinds of fields you can use in a model, see: 
 https://docs.djangoproject.com/en/1.8/ref/models/fields/
 '''
+
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 #A topic the user is learning about 
 class Topic(models.Model):
@@ -49,7 +55,8 @@ class Topic(models.Model):
 class Entry(models.Model):
     text       = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    topic      = models.ForeignKey(Topic, on_delete=models.CASCADE)  
+    #topic      = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    topic      = models.ForeignKey(Topic, on_delete=models.PROTECT)    
     ''' 
     "ForeignKey" is a database term; it's a reference to another record
     in the database. This is the code that connects each entry to a specific
