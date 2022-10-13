@@ -193,8 +193,8 @@ respond to the prompts:
 -----------------------------------------------
 Username (leave blank to use '1'): sa
 Email address: pdobrokhotov@gmail.com
-Password: pavel12345
-Password (again): pavel12345
+Password:  
+Password (again):  
 Superuser created successfully.
 -----------------------------------------------
 
