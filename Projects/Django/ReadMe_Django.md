@@ -114,5 +114,124 @@ Django will create a new database for us. At u Django reports that it will
 make the database tables needed to store the information we’ll use in this
 project (Synchronize unmigrated apps), and then make sure the database
 structure matches the current code (Apply all migrations).
+======================================================================
+================= Viewing the Project ================================
+======================================================================
+Let’s make sure that Django has set up the project properly. 
+Enter the runserver command as follows:
+> (ll_env)Django$ python manage.py runserver
+Django starts a server so you can view the project on your system to see
+how well it works. When you request a page by entering a URL in a browser,
+the Django server responds to that request by building the appropriate
+page and sending that page to the browser.
+Then on the screen you'll see IP-address you can use
+whule the Gjango server is still running
+.....................................
+System check identified no issues (0 silenced).
+October 13, 2022 - 16:52:56
+Django version 4.1.2, using settings 'learning_log.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CTRL-BREAK.
+......................................
+NOTE: If you receive the error message That port is already in use, 
+tell Django to use a different port by entering 
+> python manage.py runserver 8001 
+and cycle through higher numbers until you find an open port.
+=============================================================
+==================== Starting an App ========================
+=============================================================
+> CD "D:\My Documents\python\Projects\Django" 
+> ll_env\Scripts\activate
+> python manage.py startapp learning_logs
+The command startapp appname tells Django to create the infrastructure
+needed to build an app. If you look in the project directory now, you’ll see
+a new folder called learning_logs. Open that folder to see what Django has
+created. The most important files are models.py, admin.py, and views.py.
+We’ll use models.py to define the data we want to manage in our app. We’ll
+get to admin.py and views.py a little later.
+==============================================================
+===================== Activating Models ======================
+==============================================================
+To use our models, we have to tell Django to include our app in the overall
+project. Open settings.py (in the learning_log/learning_log directory), and
+you’ll see a section that tells Django which apps are installed in the project:
+Add our app name as shown below
+-----------------------------
+INSTALLED_APPS = (
+--snip--
+'django.contrib.staticfiles',
+# My apps
+'learning_logs',
+)
+-----------------------------
+==============================================================
+================= MODIFY DB ==================================
+==============================================================
+Next, we need to tell Django to modify the database so it can 
+store information related to the model Topic. From the terminal, 
+run the following command:
+> python manage.py makemigrations learning_logs
+The command makemigrations tells Django to figure out how to modify
+the database so it can store the data associated with any new models
+we’ve defined. The output here shows that Django has created a migration
+file called 0001_initial.py. This migration will create a table for the
+model = Topic in the database
+After we apply this migration and have Django modify the database
+for us run:
+> python manage.py migrate
+Whenever we want to modify the data that Learning Log manages,
+we’ll follow these three steps: 
+- modify models.py
+- call makemigrations on learning_logs
+- tell Django to migrate the project.
+========================================================================
+==================== Create DB-admin ===================================
+========================================================================
+To create a superuser in Django, enter the following command and
+respond to the prompts:
+> python manage.py createsuperuser
+-----------------------------------------------
+Username (leave blank to use '1'): sa
+Email address: pdobrokhotov@gmail.com
+Password: pavel12345
+Password (again): pavel12345
+Superuser created successfully.
+-----------------------------------------------
+
+===============================================
+=== Registering a Model with the Admin Site ===
+===============================================
+Django includes some models in the admin site automatically, 
+such as User and Group, but the models we create need to be 
+registered manually. To do this edit a file called admin.py 
+in the same directory as models.py and enter
+------------------------------
+from django.contrib import admin
+from learning_logs.models import Topic
+admin.site.register(Topic)
+------------------------------
+This code imports the model we want to register = Topic, and then uses
+admin.site.register() to tell Django to manage our model through the
+admin site. Now use the superuser account to access the admin site. 
+Go to http://localhost:8000/admin/
+or
+      http://127.0.0.1:8000/admin/    
+enter the username and password for the superuser
+you just created, and you should see a page allows you to add new users 
+and groups and change existing ones. We can also work with data related 
+to the Topic model that we just defined.
+--------------------------------------------------------
+NOTE: If you see a message in your browser that the web page is not available, make sure you still have the Django server running in a terminal window. If you don’t, activate a virtual environment and reissue the command :
+> python manage.py runserver
+
+
+
+
+
+
+
+
+
+
 
 
