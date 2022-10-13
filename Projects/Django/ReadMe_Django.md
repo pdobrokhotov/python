@@ -100,5 +100,19 @@ The urls.py file tells Django which pages to build in response to
 browser requests. The wsgi.py file helps Django serve the files it 
 creates. The filename is an acronym for web server gateway interface.
 ===================================================================
+================ Creating the Database (SQL-Lite)==================
+===================================================================
+SQL-Lite DB is a single file (db.sqlite3) and it’s ideal for writing
+simple apps because you won’t have to pay much attention to managing
+the database. Any time we modify a database, we say we’re migrating 
+the database.
+> python manage.py migrate
+Issuing the migrate command for the first time tells Django to make sure the
+database matches the current state of the project. The first time we run this
+command in a new project using SQLite (more about SQLite in a moment),
+Django will create a new database for us. At u Django reports that it will
+make the database tables needed to store the information we’ll use in this
+project (Synchronize unmigrated apps), and then make sure the database
+structure matches the current code (Apply all migrations).
 
 
