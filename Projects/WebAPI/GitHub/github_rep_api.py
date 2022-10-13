@@ -48,5 +48,5 @@ chart.title = 'Most-Starred Python Projects on GitHub'
 chart.x_labels = names
 # Method "chart.y_labels = stars" gives error. Use use add-method instead
 chart.add('', stars)  
-# Save xhart to file
-chart.render_to_file('Projects\WebAPI\GitHubRepos.svg')
+# Save chart to file
+chart.render_to_file('Projects\WebAPI\GitHub\GitHubRepos.svg')

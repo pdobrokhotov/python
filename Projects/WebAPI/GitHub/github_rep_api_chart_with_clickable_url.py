@@ -69,7 +69,7 @@ chart.x_labels = names
 # Method "chart.y_labels = stars" gives error. Use use add-method instead
 chart.add('', plot_dicts)
 # Save chart to file
-chart.render_to_file('Projects\WebAPI\GitHubReposClickableURL.svg')
+chart.render_to_file('Projects\WebAPI\GitHub\GitHubReposClickableURL.svg')
 
 '''
 First we make an instance of Pygal's Config class, called my_config;

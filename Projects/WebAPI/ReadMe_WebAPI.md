@@ -40,6 +40,15 @@ NOTES: When installing you can see the msg below
 In this case see
 https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
 ------------------------------------
-
-
-
+Monitoring API Rate Limits
+Most APIs are rate-limited, which means there’s a limit to how many requests you can make in a certain amount of time. To see if you’re 
+approaching GitHub’s limits, enter
+https://api.github.com/rate_limit 
+into a web browser. You should see a response like this:
+{
+"resources": {
+"core": {
+"limit": 60,
+"remaining": 58,
+"reset": 1426082320
+},........

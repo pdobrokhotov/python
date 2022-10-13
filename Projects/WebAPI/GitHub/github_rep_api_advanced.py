@@ -54,8 +54,7 @@ chart.x_labels = names
 # Method "chart.y_labels = stars" gives error. Use use add-method instead
 chart.add('', stars)
 # Save chart to file
-chart.render_to_file('Projects\WebAPI\GitHubReposAdvanced.svg')
-
+chart.render_to_file('Projects\WebAPI\GitHub\GitHubReposAdvanced.svg')
 '''
 First we make an instance of Pygal's Config class, called my_config;
 modifying the attributes of my_config will customize the appearance of the

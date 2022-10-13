@@ -12,7 +12,7 @@ plot_dicts = [{'value': 16101, 'label': 'Description of httpie.'},
               ]
 chart.add('', plot_dicts)
 # Save chart to file
-chart.render_to_file('Projects\WebAPI\GitHubBarChartTooltips.svg')
+chart.render_to_file('Projects\WebAPI\GitHub\GitHubBarChartTooltips.svg')
 #=================================================================
 '''
 First wedefine a list called plot_dicts that contains three dictionaries:
