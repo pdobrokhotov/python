@@ -192,8 +192,8 @@ respond to the prompts:
 > python manage.py createsuperuser
 -----------------------------------------------
 Username (leave blank to use '1'): sa
-Email address: pdobrokhotov@gmail.com
-Password:  
+Email address:  
+Password: ****** 
 Password (again):  
 Superuser created successfully.
 -----------------------------------------------
