@@ -1,6 +1,6 @@
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Note, that each time we add a new model, 
-# 1) rejister it admin.py. Example: admin.site.register(Topic)
+# 1) reregister it admin.py. Example: admin.site.register(Topic)
 # 2) run the commads below: 
 #> CD "D:\My Documents\python\Projects\Django" 
 #> ll_env\Scripts\activate

@@ -23,13 +23,16 @@ from . import views
 # will define the pattern that Django can look for.
 # When a URL request matches the pattern we just defined, Django 
 # will look for a function called index() in the views.py file
-#  app_name = 'learning_log' this command added i saw in google-irticle
+
 urlpatterns = [
     # Home page
     re_path(r'^$', views.index, name='index'),
     # Show all topics. Any request with a URL that matches this pattern
     # will then be passed to the function topics() in views.py.
     re_path(r'^topics/$', views.topics, name='topics'),
+    # Detail page for a single topic
+    # It forms URL like: URL will be http://localhost:8000/topics/1/
+    re_path(r'^topics/(?P<topic_id>\d+)/$', views.topic, name='topic'),
     ]
 '''
 #==================================================================
@@ -68,13 +71,16 @@ The third argument provides the name index for this URL pattern so we
 can refer to it in other sections of the code. Whenever we want to provide
 a link to the home page, we'll use this name instead of writing out a URL.
 ==========================================================================
-from django.urls import path
-from learning_logs.views import index
-urlpatterns = [
-    #Home page,
-    path('',index, name='index'),
-]
-
-
-
+Let's examine the regular expression in this URL pattern, r'^topics/
+(?P<topic_id>\d+)/$'. The r tells Django to interpret the string as a raw
+string, and the expression is contained in quotes. The second part of the
+expression, /(?P<topic_id>\d+)/, matches an integer between two forward
+slashes and stores the integer value in an argument called topic_id. The
+parentheses surrounding this part of the expression captures the value
+stored in the URL; the ?P<topic_id> part stores the matched value in
+topic_id; and the expression \d+ matches any number of digits that appear
+between the forward slashes.
+When Django finds a URL that matches this pattern, it calls the view
+function topic() with the value stored in topic_id as an argument. We'll use
+the value of topic_id to get the correct topic inside the function.
 '''
