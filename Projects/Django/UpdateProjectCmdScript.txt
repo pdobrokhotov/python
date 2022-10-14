@@ -1,0 +1,11 @@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+# Note, that each time we add a new model, 
+# 1) reregister it admin.py. Example: admin.site.register(Topic)
+# 2) run the commads below: 
+#> CD "D:\My Documents\python\Projects\Django" 
+#> ll_env\Scripts\activate
+#----------------------------------------------------------
+#> (ll_env)Django$ python manage.py makemigrations learning_logs
+#> (ll_env)Django$ python manage.py migrate
+#> (ll_env)Django$ python manage.py runserver
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

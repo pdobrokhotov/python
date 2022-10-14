@@ -6,9 +6,10 @@ with the name 'topics' in learning_logs/urls.py.
 The code from book did NOT work/ So I replaced it from here:
 https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-namespace
 -->
+<p> <a href="http://localhost:8000/admin/">Admin</a>
 <p> <!-- dash ("-") in the end tags again next href-link! -->
-    <a href="{% url 'index' %}">Learning Log</a> -
-    <a href="{% url 'topics' %}">Topics</a>
+    <a href="{% url 'index' %}">LearningLog</a> -
+    <a href="{% url 'topics' %}">Topics</a>  
 </p>
 {% block content %}{% endblock content %}
 
