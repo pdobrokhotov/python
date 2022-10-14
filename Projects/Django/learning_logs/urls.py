@@ -14,6 +14,7 @@ from django.urls import re_path
 # is a list of individual pages that can be requested from the 
 # learning_logs app
 from . import views
+
 #==============================================================
 # The actual URL pattern is a call to the url() function, which
 # takes three arguments y. The first is a regular expression. 
@@ -22,12 +23,14 @@ from . import views
 # will define the pattern that Django can look for.
 # When a URL request matches the pattern we just defined, Django 
 # will look for a function called index() in the views.py file
+#  app_name = 'learning_log' this command added i saw in google-irticle
 urlpatterns = [
     # Home page
     re_path(r'^$', views.index, name='index'),
-
+    # Show all topics. Any request with a URL that matches this pattern
+    # will then be passed to the function topics() in views.py.
+    re_path(r'^topics/$', views.topics, name='topics'),
     ]
-
 '''
 #==================================================================
 # Note, django.conf.urls.url() was deprecated in Django 3.0, 

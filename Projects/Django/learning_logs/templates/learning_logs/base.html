@@ -1,0 +1,38 @@
+<!-- 
+We add a dash after the link to the home page, and then we add
+a link to the topics page, using the URL template tag again. 
+This line tells Django to generate a link matching the URL pattern
+with the name 'topics' in learning_logs/urls.py.
+The code from book did NOT work/ So I replaced it from here:
+https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-namespace
+-->
+<p> <!-- dash ("-") in the end tags again next href-link! -->
+    <a href="{% url 'index' %}">Learning Log</a> -
+    <a href="{% url 'topics' %}">Topics</a>
+</p>
+{% block content %}{% endblock content %}
+
+<!-- This is a tempate that all web-pages wil inherit
+The first part of this file creates a paragraph containing the name of
+the project, which also acts as a link to the home page. To generate a link,
+we use a template tag, indicated by braces and percent signs. A template
+tag is a bit of code that generates information to be displayed on a page.
+In this example, the template tag [url 'learning_logs:index'] generates
+a URL matching the URL pattern defined in learning_logs/urls.py with the
+name 'index' u. In this example, learning_logs is the namespace and index is
+a uniquely named URL pattern in that namespace.
+ 
+Having the template tag generate the URL for us makes it much easier
+to keep our links up to date. To change a URL in our project, we only
+need to change the URL pattern in urls.py, and Django will automatically
+insert the updated URL the next time the page is requested. Every page in
+our project will inherit from base.html, so from now on every page will have
+a link back to the home page.
+
+Also we insert a pair of block tags. This block, named content, is a placeholder;
+the child template will define the kind of information that goes in
+the content block.
+A child template doesn’t have to define every block from its parent, so
+you can reserve space in parent templates for as many blocks as you like,
+and the child template uses only as many as it requires.
+-->

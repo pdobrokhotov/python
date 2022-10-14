@@ -1,0 +1,26 @@
+<!--================= The Topics Template ======================
+The template for the topics page receives the context dictionary 
+so the template can use the data that topics() provides
+=============================================================-->
+<!-- Inherit from base.html -->
+{% extends "learning_logs/base.html" %}
+<!-- Content specific to this page onlt -->
+{% block content %}
+  <p>Topics</p>
+  <ul>
+    <!--============== LOOP ======================================================= 
+    Here we have another template tag equivalent to a for loop, which loops
+    through the list topics from the context dictionary. The code used in templates
+    differs from Python in some important ways. Python uses indentation
+    to indicate which lines of a for statement are part of a loop. In a template,
+    every for loop needs an explicit 'endfor' tag indicating where the end of
+    the loop occurs. Variable in a template should be wrapped in double braces.
+    Tus code 'topic' will be replaced by the value of topic-variable
+    ===========================================================================-->
+    {% for topic in topics %}
+      <li>{{ topic }}</li>
+    {% empty %} <!-- print msg if there are no items in the list.-->
+      <li>No topics have been added yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}
