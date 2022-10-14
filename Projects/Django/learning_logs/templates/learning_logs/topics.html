@@ -15,10 +15,19 @@ so the template can use the data that topics() provides
     to indicate which lines of a for statement are part of a loop. In a template,
     every for loop needs an explicit 'endfor' tag indicating where the end of
     the loop occurs. Variable in a template should be wrapped in double braces.
-    Tus code 'topic' will be replaced by the value of topic-variable
-    ===========================================================================-->
+    Thus code 'topic' will be replaced by the value of topic-variable
+     ===========================================================================-->
     {% for topic in topics %}
-      <li>{{ topic }}</li>
+       <!--
+       We use the URL template tag to generate the proper link, based on
+       the URL pattern in learning_logs with the name 'topic'. This URL pattern
+       requires a topic_id argument, so we add the attribute topic.id to the URL
+       template tag. Now each topic in the list of topics is a link to a topic page,
+       such as http://localhost:8000/topics/1/.
+       Note, that in the book href-link was url = 'learning_logs:topic' topic.id
+       bur it DID NOT work and I pepleced it to = 'topic' topic.id
+       -->
+      <li><a href="{% url 'topic' topic.id %}">{{ topic }}</a></li>      
     {% empty %} <!-- print msg if there are no items in the list.-->
       <li>No topics have been added yet.</li>
     {% endfor %}

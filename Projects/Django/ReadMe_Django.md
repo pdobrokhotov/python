@@ -60,19 +60,25 @@ that have already been installed. Packages you install in "ll_env"
 will be available only while the environment is active
 To stop using a virtual environment, enter deactivate:
 > (ll_env)Django$ deactivate
-The environment will also become inactive if you close the terminal 
-it’s running in.
+The environment will also become inactive if you close 
+the terminal it’s running in.
 ==========================================================
 ================== Installing Django =====================
 ==========================================================
+NOTE: The code in book is based on older version = 3.2
+Thus, better install lt instead id the latest one
+> (ll_env)Django$ pip install django==3.2.10
+---------------------------------------------------------
+To install the latest version ( 4.1.2) run:
 > (ll_env)Django$ pip install Django
  or better
 > (ll_env)Django$ py -m pip install Django
-
+---------------------------------------------------------
 Keep in mind that Django will be available only when the 
 environment is active. (it seems to be installed on C:)
 Verify version (we have = 4.1.2)
 >(ll_env)Django$ django-admin --version
+
 ==========================================================
 ============ Creating a Project in Django ================
 ==========================================================
