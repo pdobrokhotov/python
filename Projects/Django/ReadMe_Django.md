@@ -71,7 +71,7 @@ it’s running in.
 
 Keep in mind that Django will be available only when the 
 environment is active. (it seems to be installed on C:)
-Verify version
+Verify version (we have = 4.1.2)
 >(ll_env)Django$ django-admin --version
 ==========================================================
 ============ Creating a Project in Django ================
@@ -192,9 +192,9 @@ respond to the prompts:
 > python manage.py createsuperuser
 -----------------------------------------------
 Username (leave blank to use '1'): sa
-Email address:  
+Email address:  ******
 Password: ****** 
-Password (again):  
+Password (again): ****** 
 Superuser created successfully.
 -----------------------------------------------
 
