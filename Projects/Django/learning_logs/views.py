@@ -16,7 +16,7 @@ from django.urls import reverse  # modified by me)
 # Model associated with Topics-page
 from .models import Topic
 # Model associated with User Forms (Example: def new_topic(request))
-from .forms import TopicForm
+from .forms import TopicForm, EntryForm
 
 #===============================================================
 # Create your views here.
@@ -94,10 +94,47 @@ def new_topic(request):
             # the URL to HttpResponseRedirect(), which redirects the user's 
             # browser to the topics page. On the topics page, the user should
             # see the topic they just entered in the list of topics.
-            return HttpResponseRedirect(reverse('learning_logs:topics'))
+            return HttpResponseRedirect(reverse('topics'))
     # Send the form to the template in the context dictionary variable   
     context = {'form': form} # dictionary with one item (form object variable)
     return render(request, 'learning_logs/new_topic.html', context)
  
 #================================================================ 
+# Add a new entry for a particular topic.
+# The definition of new_entry() has a topic_id parameter to store the value it
+# receives from the URL. We’ll need the topic to render the page and process
+# the form’s data, so we use topic_id to get the correct topic object 
+def new_entry(request, topic_id):
+    topic = Topic.objects.get(id=topic_id)
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = EntryForm()
+    else:
+        # POST data submitted; process data.
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            # When we call save(), we include the argument commit=False
+            # to tell Django to create a new entry object and store it in
+            # new_entry without saving it to the database yet.
+            new_entry = form.save(commit=False)
+            # set new_entry’s topic attribute to the topic we pulled
+            # from the database at the beginning of the function and 
+            # then we call save() with no arguments. This saves the 
+            # entry to the database with the correct associated topic.
+            new_entry.topic = topic
+            new_entry.save()
+            # Redirect the user to the topic page. The reverse() call 
+            # requires two arguments: the name of the URL pattern we want
+            # to generate a URL for and an args list containing any arguments
+            # that need to be included in the URL. The args list has one item
+            # in it = topic_id. The HttpResponseRedirect() call then redirects 
+            # the user to the topic page they made an entry for, and they 
+            # should see their new entry in the list of entries.
+            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
+    # Send the form to the template in the context dictionary variable         
+    context = {'topic': topic, 'form': form}
+    return render(request, 'learning_logs/new_entry.html', context)
 
+#================================================================ 
+#================================================================ 
+#================================================================ 

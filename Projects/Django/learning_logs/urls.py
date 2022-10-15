@@ -36,6 +36,10 @@ urlpatterns = [
     # Page for adding a new topic
     # It forms URL like: http://localhost:8000/new_topic/.
     re_path(r'^new_topic/$', views.new_topic, name='new_topic'),
+    # Page for adding a new entry
+    # It forms URL like: http://localhost:8000/new_entry/id/, 
+    # where id is a number matching the topic ID
+    re_path(r'^new_entry/(?P<topic_id>\d+)/$', views.new_entry, name='new_entry'),
     
     
     ]
@@ -88,4 +92,8 @@ between the forward slashes.
 When Django finds a URL that matches this pattern, it calls the view
 function topic() with the value stored in topic_id as an argument. We'll use
 the value of topic_id to get the correct topic inside the function.
+
+The code (?P<topic_id>\d+) captures a numerical value and stores it in the variable
+topic_id. When a URL matching this pattern is requested, Django sends the
+request and the ID of the topic to the new_entry() view function.
 '''

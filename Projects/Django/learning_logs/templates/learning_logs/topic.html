@@ -10,6 +10,13 @@ a bulleted list to show each of the entries
 {% block content %}
   <p>Topic: {{ topic }}</p>
   <p>Entries:</p>
+  <p>
+    <!-- Instead of [url 'learning_logs:new_entry' topic.id] as it was in a book
+         and gives error = ['learning_logs' is not a registered namespace]
+         we use ['new_entry' topic.id]
+    -->
+    <a href="{% url 'new_entry' topic.id %}">add new entry</a>
+  </p>
   <ul>
   <!-- ================= LOOP ============================-->
   {% for entry in entries %}
