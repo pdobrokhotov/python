@@ -1,11 +1,22 @@
 '''
 The file views.py in learning_logs was generated automatically 
 when we ran the command:  python manage.py startapp
+We import the class HttpResponseRedirect, which we'll use to redirect the
+reader back to the topics page after they submit their topic. The reverse()
+function determines the URL from a named URL pattern, meaning that
+Django will generate the URL when the page is requested.
 '''
 # Module renders the response based on the data provided by views
 from django.shortcuts import render
+# Modules needed for new_topic() function (request,process and redirect)
+from django.http import HttpResponseRedirect
+# The module below was depricated and we use [django.urls] instead
+# from django.core.urlresolvers import reverse  (from book)
+from django.urls import reverse  # modified by me)
 # Model associated with Topics-page
 from .models import Topic
+# Model associated with User Forms (Example: def new_topic(request))
+from .forms import TopicForm
 
 #===============================================================
 # Create your views here.
@@ -52,5 +63,41 @@ def topic(request, topic_id):
     context = {'topic': topic, 'entries': entries}
     # send context to the template topic.html
     return render(request, 'learning_logs/topic.html', context) 
+#================================================================
+#  Render a form for a new topic. 
+'''
+You use GET requests for pages that only read data from the server. 
+You usually use POST requests when the user needs to submit information
+through a form. We'll be specifying the POST method for processing all 
+of our forms. Thus function takes in the request object as a parameter.
+When the user initially requests this page, their browser will send a GET
+request. When the user has filled out and submitted the form, their browser
+will submit a POST request. Depending on the request, we'll know if
+the user is requesting a blank form (a GET request) or asking us to process
+a completed form (a POST request).
+'''
+def new_topic(request):
+    if request.method != 'POST':
+        # No data submitted; create a blank form.
+        form = TopicForm()
+    else:
+        # POST data submitted; process data.
+        # Thus, make an instance of TopicForm and pass it
+        # the data entered by the user, stored in request.POST. 
+        # The form object that’s returned contains the information 
+        # submitted by the user
+        form = TopicForm(request.POST)
+        if form.is_valid(): # if data valid (for example fileds are non empty)
+            form.save() # write the data from the form to the database
+            # Once we’ve saved the data, we can leave this page. 
+            # We use reverse() to get the URL for the topics page and pass
+            # the URL to HttpResponseRedirect(), which redirects the user's 
+            # browser to the topics page. On the topics page, the user should
+            # see the topic they just entered in the list of topics.
+            return HttpResponseRedirect(reverse('learning_logs:topics'))
+    # Send the form to the template in the context dictionary variable   
+    context = {'form': form} # dictionary with one item (form object variable)
+    return render(request, 'learning_logs/new_topic.html', context)
+ 
 #================================================================ 
 

@@ -32,4 +32,10 @@ so the template can use the data that topics() provides
       <li>No topics have been added yet.</li>
     {% endfor %}
   </ul>
+  <!--Render link for NewTopicForm and place it after the list of existing topics.
+      Instead of [url 'learning_logs:new_topic'] as it was in a book
+       and gave error = ['learning_logs' is not a registered namespace]
+       we use [url 'new_topic']
+  -->
+  <a href="{% url 'new_topic' %}">Add a new topic:</a>
 {% endblock content %}
