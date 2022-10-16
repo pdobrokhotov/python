@@ -23,8 +23,6 @@ from .forms import TopicForm, EntryForm
 #===============================================================
 # The home page for Learning Log 
 def index(request):
-    #pass
-    #return render(request, 'Django/templates/learning_logs/index.html')
     return render(request, 'learning_logs/index.html')
 #================================================================ 
 # Show all topics. 
@@ -94,7 +92,7 @@ def new_topic(request):
             # the URL to HttpResponseRedirect(), which redirects the user's 
             # browser to the topics page. On the topics page, the user should
             # see the topic they just entered in the list of topics.
-            return HttpResponseRedirect(reverse('topics'))
+            return HttpResponseRedirect(reverse('learning_logs:topics'))
     # Send the form to the template in the context dictionary variable   
     context = {'form': form} # dictionary with one item (form object variable)
     return render(request, 'learning_logs/new_topic.html', context)
@@ -130,7 +128,7 @@ def new_entry(request, topic_id):
             # in it = topic_id. The HttpResponseRedirect() call then redirects 
             # the user to the topic page they made an entry for, and they 
             # should see their new entry in the list of entries.
-            return HttpResponseRedirect(reverse('topic', args=[topic_id]))
+            return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic_id]))
     # Send the form to the template in the context dictionary variable         
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
@@ -159,7 +157,7 @@ def edit_entry(request, entry_id):
             form.save()
             # redirect to the topic page y, where the user should see the 
             # updated version of the entry they edited.
-            return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+            return HttpResponseRedirect(reverse('learning_logs:topic', args=[topic.id]))
     # Send the form to the template in the context dictionary variable              
     context = {'entry': entry, 'topic': topic, 'form': form}
     return render(request, 'learning_logs/edit_entry.html', context)

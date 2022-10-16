@@ -15,7 +15,7 @@ a bulleted list to show each of the entries
          and gives error = ['learning_logs' is not a registered namespace]
          we use ['new_entry' topic.id]
     -->
-    <a href="{% url 'new_entry' topic.id %}">add new entry</a>
+    <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
   </p>
   <ul>
   <!-- ================= LOOP ============================-->
@@ -24,7 +24,7 @@ a bulleted list to show each of the entries
       <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
       <p>{{ entry.text|linebreaks }}</p>
       <p>
-        <a href="{% url 'edit_entry' entry.id %}">edit entry</a>
+        <a href="{% url 'learning_logs:edit_entry' entry.id %}">edit entry</a>
       </p>
     </li>
   {% empty %}

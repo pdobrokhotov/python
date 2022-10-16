@@ -22,10 +22,25 @@ from django.urls import include #,url
 from django.urls import re_path    
 from django.contrib import admin
 #==============================================================
-
+# Below (as in the book) in every INCLUDE() we also must pass
+# a namespace parameter, like include('users.urls', namespace='users')
+# but in this version of Django this gives error. The example below seems to work
+'''
+    re_path(r''       , include( ('learning_logs.urls','learning_logs'),
+                                namespace= 'learning_logs'
+                                )),  
+    
+''' 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls ),
-    re_path(r'', include('learning_logs.urls')),
+    #re_path(r'^users/', include('users.urls')),
+    #re_path(r''       , include( 'learning_logs.urls')),  
+    
+    re_path(r''       , include( ('learning_logs.urls','learning_logs'),
+                                namespace= 'learning_logs'
+                                )),    
+          
+ 
 ]
 #======================================================================         
 '''
