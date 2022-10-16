@@ -23,11 +23,13 @@ so the template can use the data that topics() provides
        the URL pattern in learning_logs with the name 'topic'. This URL pattern
        requires a topic_id argument, so we add the attribute topic.id to the URL
        template tag. Now each topic in the list of topics is a link to a topic page,
-       such as http://localhost:8000/topics/1/.
+       such as http://localhost:8000/topics/17/.
        Note, that in the book href-link was url = 'learning_logs:topic' topic.id
-       bur it DID NOT work and I pepleced it to = 'topic' topic.id
+       but it DID NOT work and I pepleced it to = 'topic' topic.id
+       <li>{{ topic }}</li>
+       <h3><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h3>
        -->
-      <li><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></li>      
+      <li><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></li>
     {% empty %} <!-- print msg if there are no items in the list.-->
       <li>No topics have been added yet.</li>
     {% endfor %}

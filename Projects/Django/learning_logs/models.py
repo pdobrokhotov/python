@@ -9,8 +9,27 @@
 #> (ll_env)Django$ python manage.py migrate
 #> (ll_env)Django$ python manage.py runserver
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 from django.db import models
+'''
+                 Connecting Data to Certain Users
+Now we need to connect the data submitted to the user who submitted it.
+We need to connect only the data highest in the hierarchy to a user, and the
+lower-level data will follow. For example, in Learning Log, topics are the
+highest level of data in the app, and all entries are connected to a topic.
+As long as each topic belongs to a specific user, we'll be able to trace the
+ownership of each entry in the database.
+We'll modify the Topic model by adding a foreign key relationship to a
+user. We'll then have to migrate the database. Finally, we'll have to modify
+some of the views so they only show the data associated with the currently
+logged-in user. For this we use lib = [django.contrib.auth.models import User]
+This works because our DB-relationship is = USER->TOPIC->ENTRY
+'''
+# Import the User model from django.contrib.auth. We then add an owner field
+# to Topic, which establishes a foreign key relationship to the User model.
+from django.contrib.auth.models import User
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
 #======================================================
 # Create your models here.
 #======================================================
@@ -27,7 +46,7 @@ of 200 characters, which should be enough to hold most topic names.
 The date_added attribute is a DateTimeField—a piece of data that will
 record a date and time. We pass the argument auto_add_now=True, which
 tells Django to automatically set this attribute to the current date 
-and time whenever the user creates a new topic.To see the different 
+and time whenever the user creates a new topic. To see the different 
 kinds of fields you can use in a model, see: 
 https://docs.djangoproject.com/en/1.8/ref/models/fields/
 '''
@@ -37,6 +56,10 @@ https://docs.djangoproject.com/en/1.8/ref/models/fields/
 class Topic(models.Model):
     text       = models.CharField(max_length=200)
     date_added = models.DateTimeField(auto_now_add=True)
+    #Add a foreign key relationship to a user. This will allow
+    # each user see his own Topic only (and of cousrse this topic entries)
+    # We can use either models.CASCADE or models.PROTECT
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
     #====================================================
     # Return a string representation of the model
     def __str__(self):
@@ -52,10 +75,10 @@ class Topic(models.Model):
    
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 # Something specific learned about a topic 
+# We can use either models.CASCADE or models.PROTECT
 class Entry(models.Model):
     text       = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    #topic     = models.ForeignKey(Topic, on_delete=models.CASCADE)
     topic      = models.ForeignKey(Topic, on_delete=models.PROTECT)    
     ''' 
     "ForeignKey" is a database term; it's a reference to another record

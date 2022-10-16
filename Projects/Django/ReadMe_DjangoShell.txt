@@ -55,3 +55,51 @@ it’s much easier to troubleshoot your code in the simple shell environment
 than it is within the files that generate web pages. We won’t refer to the shell
 much, but you should continue using it to practice working with Django’s
 syntax for accessing the data stored in the project.
+
+=========================================================================
+After adding foreign ley to a user we come acros with situation that
+we have to do the followon in Shellafter error in DB-migration
+You can resolve this problem by creating a fresh database, issueing
+the command: 
+                 > python manage.py flush 
+to rebuild the database structure. But then you’ll have to create
+a new superuser, and all of your data will be gone
+If this does NOT suit then make a db-maigration as shown below:
+---------------------------------------------------------------
+(venv)Django$ python manage.py shell
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+[<User: ll_admin>, <User: eric>, <User: willie>]
+>>> for user in User.objects.all():
+... print(user.username, user.id)
+...
+ll_admin 1
+eric 2
+willie 3
+>>>
+--------------------
+                    Migrating the Database
+Now that we know the IDs, we can migrate the database.
+     > (venv)learning_log$ python manage.py makemigrations learning_logs
+You are trying to add a non-nullable field 'owner' to topic without a default;
+we can't do that (the database needs something to populate existing rows).
+    > Please select a fix:
+    1) Provide a one-off default now (will be set on all existing rows)
+    2) Quit, and let me add a default in models.py
+       Select an option: 1
+       Please enter the default value now, as valid Python
+The datetime and django.utils.timezone modules are available, so you can do
+e.g. timezone.now()
+     >>> 1
+     Migrations for 'learning_logs':
+     0003_topic_owner.py:
+     Add field owner to topic
+---------------------------------------------
+> (venv)Django$ python manage.py migrate
+    Operations to perform:
+    Synchronize unmigrated apps: messages, staticfiles
+    Apply all migrations: learning_logs, contenttypes, sessions, admin, auth
+    Running migrations:
+    Rendering model states... DONE
+    Applying learning_logs.0003_topic_owner... OK
+    (venv)learning_log$

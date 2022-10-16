@@ -31,12 +31,12 @@ urlpatterns = [
     # will then be passed to the function topics() in views.py.
     re_path(r'^topics/$', views.topics, name='topics'),
     # Detail page for a single topic
-    # It forms URL like: http://localhost:8000/topics/1/
+    # It forms URL like: http://localhost:8000/topics/17/
     re_path(r'^topics/(?P<topic_id>\d+)/$', views.topic, name='topic'),
     # Page for adding a new topic
     # It forms URL like: http://localhost:8000/new_topic/.
     re_path(r'^new_topic/$', views.new_topic, name='new_topic'),
-    # Pags to add\edit a new entry
+    # Tags to add\edit a new entry
     # It forms URL like: http://localhost:8000/new_entry/id/, 
     # where id is a number matching the topic ID
     re_path(r'^new_entry/(?P<topic_id>\d+)/$', views.new_entry, name='new_entry'),

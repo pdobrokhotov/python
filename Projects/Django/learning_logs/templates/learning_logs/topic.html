@@ -8,13 +8,10 @@ a bulleted list to show each of the entries
 
 -->
 {% block content %}
+  <!--Note! here we show  just the Topic name, NOT a web-link!-->
   <p>Topic: {{ topic }}</p>
   <p>Entries:</p>
   <p>
-    <!-- Instead of [url 'learning_logs:new_entry' topic.id] as it was in a book
-         and gives error = ['learning_logs' is not a registered namespace]
-         we use ['new_entry' topic.id]
-    -->
     <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
   </p>
   <ul>
