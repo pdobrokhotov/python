@@ -22,7 +22,8 @@ https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-n
     he is logged in
     -->
     {% if user.is_authenticated %}
-      Hello, {{ user.username }}.
+      <br>Hello, {{ user.username }}!</br>
+      <a href="{% url 'users:logout' %}">log out</a>
     {% else %}
     <!--Display a link to the login page for non-authenticated users-->
       <a href="{% url 'users:login' %}">log in</a>
