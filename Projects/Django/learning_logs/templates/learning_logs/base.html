@@ -1,62 +1,95 @@
-<!-- 
-We add a dash after the link to the home page, and then we add
-a link to the topics page, using the URL template tag again. 
-This line tells Django to generate a link matching the URL pattern
-with the name 'topics' in learning_logs/urls.py.
-The code from book did NOT work/ So I replaced it from here:
-https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-namespace
--->
-<p> <a href="http://localhost:8000/admin/">Admin</a></p> 
-<p> <!-- dash ("-") in the end tags again next href-link! -->
-    <a href="{% url 'learning_logs:index' %}">LearningLog</a> -
-    <a href="{% url 'learning_logs:topics' %}">Topics</a> -
-    <!-- 
-    We don’t want the link to display when the user, is already logged
-    in so we nest it inside [if]-tag. In Django’s authentication system, 
-    every template has a user variable available, which always has an 
-    is_authenticated attribute set: the attribute is True if the user 
-    is logged in and False if they aren’t. This allows you to display one 
-    message to authenticated users and another to unauthenticated users.
-    Also authenticated users have an additional username attribute set, 
-    which we use to personalize the greeting and remind the user that 
-    he is logged in. Users who are logged in see a personalized greeting 
-    and a logout link. Users not logged in see a registration page link 
-    and a login link. 
-    -->
-    {% if user.is_authenticated %}
-      <br>Hello, {{ user.username }}!</br>
-      <a href="{% url 'users:logout' %}">log out</a>
-    {% else %}
-      <!--Display a link to the registration page link  
-       to any user who is not currently logged in-->
-      <a href="{% url 'users:register' %}">register</a> -
-      <!--Display a link to the login page for non-authenticated users-->
-      <a href="{% url 'users:login' %}">log in</a>
-    {% endif %}
-</p>
-{% block content %}{% endblock content %}
+<!--@@@@@@@@@@@@@@@@@@@@@ django-bootstrap3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ATTENTION! On this page we use "django-bootstrap3" styling library that 
+# you have to insatall first as shown below. Also register it seetings.py
+# > (ll_env) pip install django-bootstrap3
+# We need django-bootstrap3 to include jQuery, a JavaScript library that
+# enables some of the interactive elements that the Bootstrap template provides.
+# This code spares us from having to download jQuery and place it in the
+# correct location manually.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
-<!-- This is a tempate that all web-pages wil inherit
-The first part of this file creates a paragraph containing the name of
-the project, which also acts as a link to the home page. To generate a link,
-we use a template tag, indicated by braces and percent signs. A template
-tag is a bit of code that generates information to be displayed on a page.
-In this example, the template tag [url 'learning_logs:index'] generates
-a URL matching the URL pattern defined in learning_logs/urls.py with the
-name 'index' u. In this example, learning_logs is the namespace and index is
-a uniquely named URL pattern in that namespace.
+<!--Load the collection of template tags available in djangobootstrap3.-->
+{% load bootstrap3 %}
+<!--Declare this file as an HTML document written in English.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning Log</title>
+  <!-- Use one of django-bootstrap3’s custom template tags, which tells 
+   Django to include all the Bootstrap style files. The tag that follows
+   enables all the interactive behavior you might use on a page, such 
+   as collapsible navigation bars. -->
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+</head>
+<body> 
+    <!-- <nav>-tag indicates the navigation links section of the page. 
+    Everything contained in this element is styled according to the 
+    Bootstrap style rules defined by the selectors navbar, navbar-default,
+    and navbar-static-top. A selector determines which elements on a page
+    a certain style rule applies to.-->
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <!--====================================================================-->
+      <div class="navbar-header">
+        <!--Set a button that will appear if the browser window is too narrow
+        to display the whole navigation bar horizontally. When the user clicks 
+        the button, the navigation elements will appear in a dropdown list. 
+        The collapse reference causes the navigation bar to collapse when the 
+        user shrinks the browser window or when the site is displayed on mobile
+        devices with small screens.-->
+        <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+        </button>
+        <!--set the project’s name to appear at the far left of the navigation
+        bar and make it a link to the home page, because it will appear on every
+        page in the project.-->
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+           Learning Log
+        </a>
+      </div>
+      <!--====================================================================-->
+      <!-- Define a set of links that lets users navigate the site. A navigation
+      bar is basically a list that starts with <ul>, and each link is an item in
+      this list (<li>). This line represents a single link in the navigation bar.
+      The link is taken directly from the previous version of base.html.-->
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="{% url 'learning_logs:topics' %}">Topics</a></li>
+        </ul>
+        <!--Place a second list of navigation links, this time using selector =
+        "navbar-right". This selector styles the set of links so it appears at 
+        the right edge of the navigation bar where you typically see login and
+        registration links. Here we’ll display the user greeting and logout link
+        or links to register or log in -->
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            <li><a>Hello, {{ user.username }}.</a></li>
+            <li><a href="{% url 'users:logout' %}">log out</a></li>
+          {% else %}
+            <li><a href="{% url 'users:register' %}">register</a></li>
+            <li><a href="{% url 'users:login' %}">log in</a></li>
+          {% endif %}
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+  <!--====================================================================-->
+  <!-- Set opening "div"-tag for class container. This tag is a section of a
+  web page that can be used for any purpose and can be styled with a border,
+  space around the element (margins), space between the contents and the
+  border (padding), background colors, and other style rules. This particular
+  "div"-tag acts as a container into which we place two elements: a new block 
+  called header and the CONTENT BLOCK block we used earler (see old file) -->
+  <div class="container">
+    <div class="page-header">{% block header %}{% endblock header %}</div>
+    <div> {% block content %}{% endblock content %} </div>
+  </div> 
+  <!--====================================================================-->
+</body>
+</html>
  
-Having the template tag generate the URL for us makes it much easier
-to keep our links up to date. To change a URL in our project, we only
-need to change the URL pattern in urls.py, and Django will automatically
-insert the updated URL the next time the page is requested. Every page in
-our project will inherit from base.html, so from now on every page will have
-a link back to the home page.
-
-Also we insert a pair of block tags. This block, named content, is a placeholder;
-the child template will define the kind of information that goes in
-the content block.
-A child template doesn’t have to define every block from its parent, so
-you can reserve space in parent templates for as many blocks as you like,
-and the child template uses only as many as it requires.
--->

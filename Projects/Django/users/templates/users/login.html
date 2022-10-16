@@ -1,36 +1,42 @@
-<!--
-This template extends base.html to ensure that the login page will have
-the same look and feel as the rest of the site. Note that a template in one
-app can extend a template from another app.
--->
-{% extends "learning_logs/base.html" %}
+<!--@@@@@@@@@@@@@@@@@@@@@ django-bootstrap3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ATTENTION! On this page we use "django-bootstrap3" styling library that 
+# you have to insatall first as shown below. Also register it seetings.py
+# > (ll_env) pip install django-bootstrap3
+# We need django-bootstrap3 to include jQuery, a JavaScript library that
+# enables some of the interactive elements that the Bootstrap template provides.
+# This code spares us from having to download jQuery and place it in the
+# correct location manually.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
+<!--This template extends base.html to ensure that the login page will have
+the same look and feel as the rest of the site. Note that a template in one
+app can extend a template from another app.-->
+{% extends "learning_logs/base.html" %}
+<!--Load the bootstrap3 template tags into this template -->
+{% load bootstrap3 %}
+<!--Define the header block, which describes what the page is for. 
+Note, that we’ve removed the  [if]- block from the template (see old file) 
+because djangobootstrap3 manages form errors automatically -->
+{% block header %}
+  <h2>Log in to your account.</h2>
+{% endblock header %}
+<!--======================================================================-->
 {% block content %}
-  <!--
-  If the form’s errors attribute is set, we display an error message,
-  reporting that the username and password combination don’t match 
-  anything stored in the database.
-  -->
-  {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-  {% endif %}
-  <!-- 
-   We want the login view to process the form, so we set the action 
-   argument as the URL of the login page
-  -->
-  <form method="post" action="{% url 'users:login' %}">
+  <!--Add a class="form" attribute, and then we use the template tag 
+  [bootstrap_form] when we display the form. Note, that this replaces 
+  the [form.as_p] which we used previously (see old file)
+  The [booststrap_form] template tag inserts Bootstrap style rules 
+  into the individual elements of the form as it’s rendered.-->
+  <form method="post" action="{% url 'users:login' %}" class="form">
     {% csrf_token %}
-    <!--
-     The login view sends a form to the template, and it’s up to us 
-     to display the form w and add a submit button
-    -->
-    {{ form.as_p }}
-    <button name="submit">log in</button>
-    <!-- 
-    We include a hidden form element, 'next'; the value argument tells Django
+    {% bootstrap_form form %}
+    <!--Open a bootstrap3 buttons-tag which adds styling to buttons-->
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">log in</button>
+    {% endbuttons %}
+    <!--We include a hidden form element, 'next'; the value argument tells Django
     where to redirect the user after they’ve logged in successfully. In this 
-    case, we send the user back to the home page.
-    -->
+    case, we send the user back to the home page.-->
     <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
   </form>
 {% endblock content %}

@@ -1,0 +1,62 @@
+<!-- 
+We add a dash after the link to the home page, and then we add
+a link to the topics page, using the URL template tag again. 
+This line tells Django to generate a link matching the URL pattern
+with the name 'topics' in learning_logs/urls.py.
+The code from book did NOT work/ So I replaced it from here:
+https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-namespace
+-->
+<p> <a href="http://localhost:8000/admin/">Admin</a></p> 
+<p> <!-- dash ("-") in the end tags again next href-link! -->
+    <a href="{% url 'learning_logs:index' %}">LearningLog</a> -
+    <a href="{% url 'learning_logs:topics' %}">Topics</a> -
+    <!-- 
+    We don’t want the link to display when the user, is already logged
+    in so we nest it inside [if]-tag. In Django’s authentication system, 
+    every template has a user variable available, which always has an 
+    is_authenticated attribute set: the attribute is True if the user 
+    is logged in and False if they aren’t. This allows you to display one 
+    message to authenticated users and another to unauthenticated users.
+    Also authenticated users have an additional username attribute set, 
+    which we use to personalize the greeting and remind the user that 
+    he is logged in. Users who are logged in see a personalized greeting 
+    and a logout link. Users not logged in see a registration page link 
+    and a login link. 
+    -->
+    {% if user.is_authenticated %}
+      <br>Hello, {{ user.username }}!</br>
+      <a href="{% url 'users:logout' %}">log out</a>
+    {% else %}
+      <!--Display a link to the registration page link  
+       to any user who is not currently logged in-->
+      <a href="{% url 'users:register' %}">register</a> -
+      <!--Display a link to the login page for non-authenticated users-->
+      <a href="{% url 'users:login' %}">log in</a>
+    {% endif %}
+</p>
+{% block content %}{% endblock content %}
+
+<!-- This is a tempate that all web-pages wil inherit
+The first part of this file creates a paragraph containing the name of
+the project, which also acts as a link to the home page. To generate a link,
+we use a template tag, indicated by braces and percent signs. A template
+tag is a bit of code that generates information to be displayed on a page.
+In this example, the template tag [url 'learning_logs:index'] generates
+a URL matching the URL pattern defined in learning_logs/urls.py with the
+name 'index' u. In this example, learning_logs is the namespace and index is
+a uniquely named URL pattern in that namespace.
+ 
+Having the template tag generate the URL for us makes it much easier
+to keep our links up to date. To change a URL in our project, we only
+need to change the URL pattern in urls.py, and Django will automatically
+insert the updated URL the next time the page is requested. Every page in
+our project will inherit from base.html, so from now on every page will have
+a link back to the home page.
+
+Also we insert a pair of block tags. This block, named content, is a placeholder;
+the child template will define the kind of information that goes in
+the content block.
+A child template doesn’t have to define every block from its parent, so
+you can reserve space in parent templates for as many blocks as you like,
+and the child template uses only as many as it requires.
+-->
