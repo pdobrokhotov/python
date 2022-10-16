@@ -13,8 +13,8 @@ from django.http import HttpResponseRedirect
 # The module below was depricated and we use [django.urls] instead
 # from django.core.urlresolvers import reverse  (from book)
 from django.urls import reverse  # modified by me)
-# Model associated with Topics-page
-from .models import Topic
+# Model associated with Topics\Entry pages
+from .models import Topic, Entry
 # Model associated with User Forms (Example: def new_topic(request))
 from .forms import TopicForm, EntryForm
 
@@ -134,7 +134,36 @@ def new_entry(request, topic_id):
     # Send the form to the template in the context dictionary variable         
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
+#================================================================
+# Edit an existing entry. 
+def edit_entry(request, entry_id):
+    # get the entry object that the user wants to edit and the topic 
+    # associated with this entry
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    if request.method != 'POST':
+        # Initial request; pre-fill form with the current entry.
+        # Make an instance of EntryForm with the argument instance=entry
+        # This argument tells Django to create the form prefilled with 
+        # information from the existing entry object. The user will see 
+        # their existing data and be able to edit that data.
+        form = EntryForm(instance=entry)
+    else: 
+        # POST data submitted; process data.
+        # When processing a POST request, we pass the instance=entry argument
+        # and the data=request.POST argument w to tell Django to create a form
+        # instance based on the information associated with the existing entry
+        # object, updated with any relevant data from [request.POST]
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            # redirect to the topic page y, where the user should see the 
+            # updated version of the entry they edited.
+            return HttpResponseRedirect(reverse('topic', args=[topic.id]))
+    # Send the form to the template in the context dictionary variable              
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    return render(request, 'learning_logs/edit_entry.html', context)
 
-#================================================================ 
+
 #================================================================ 
 #================================================================ 

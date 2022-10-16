@@ -36,11 +36,11 @@ urlpatterns = [
     # Page for adding a new topic
     # It forms URL like: http://localhost:8000/new_topic/.
     re_path(r'^new_topic/$', views.new_topic, name='new_topic'),
-    # Page for adding a new entry
+    # Pags to add\edit a new entry
     # It forms URL like: http://localhost:8000/new_entry/id/, 
     # where id is a number matching the topic ID
     re_path(r'^new_entry/(?P<topic_id>\d+)/$', views.new_entry, name='new_entry'),
-    
+    re_path(r'^edit_entry/(?P<entry_id>\d+)/$',views.edit_entry,name='edit_entry'),
     
     ]
 '''

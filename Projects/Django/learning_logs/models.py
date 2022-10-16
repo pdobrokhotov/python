@@ -55,7 +55,7 @@ class Topic(models.Model):
 class Entry(models.Model):
     text       = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
-    #topic      = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    #topic     = models.ForeignKey(Topic, on_delete=models.CASCADE)
     topic      = models.ForeignKey(Topic, on_delete=models.PROTECT)    
     ''' 
     "ForeignKey" is a database term; it's a reference to another record
@@ -65,7 +65,6 @@ class Entry(models.Model):
     key associated with each piece of information. We'll use these connections
     shortly to retrieve all the entries associated with a certain topic.   
     '''
- 
     #====================================================================
     # Nest the Meta class inside our Entry class. Meta holds extra information
     # for managing a model; here it allows us to set a special attribute
