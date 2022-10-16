@@ -28,4 +28,10 @@ urlpatterns = [
         name='login'), 
     # Logout page
     url(r'^logout/$', views.logout_view, name='logout'),
+    # Registration page. Allow new users to register. We’ll use Django’s
+    # default UserCreationForm but write our own view function and template
+    # This pattern matches the URL http://localhost:8000/users/register/ 
+    # and sends requests to the register() function in 'users/views.py'
+    url(r'^register/$', views.register, name='register'),
+    
 ]
