@@ -245,6 +245,18 @@ session:
   >>> Topic.objects.all()
 Result on screen : <QuerySet [<Topic: topic 1>, <Topic: topic 2>]>
 ============================================================
+==================== The django-bootstrap3 App =============
+============================================================
+We’ll use django-bootstrap3 to integrate Bootstrap into our project. This
+app downloads the required Bootstrap files, places them in an appropriate
+location in your project, and makes the styling directives available in your
+project’s templates.To install django-bootstrap3, issue the following command
+in an active virtual environment:
+> (ll_env)learning_log$ pip install django-bootstrap3
+============================================================
+
+
+
 
 
 

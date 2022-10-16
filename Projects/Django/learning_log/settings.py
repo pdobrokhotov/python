@@ -5,6 +5,18 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
+=========================================================================
+             Using Bootstrap to Style Learning Log
+=========================================================================
+Bootstrap is basically a large collection of styling tools. It also has 
+a number of templates you can apply to your project to create a particular
+overall style. If you're just starting out, it's much easier to use these 
+templates than it is to use individual styling tools. To see the templates
+Bootstrap offers, go to the Getting Started section at
+http://getbootstrap.com/
+Then scroll down to the Examples heading, and look for the Navbars in action
+section. We'll use the Static top navbar template, which provides a simple 
+top navigation bar, a page header, and a container for the content of the page.
 """
 from pathlib import Path
 #====================================================================
@@ -18,8 +30,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # [login_required] decorator, Django will send the user to the URL 
 # defined by LOGIN_URL in settings.py.
 LOGIN_URL = '/users/login/'
+#===================================================================
+# Settings for django-bootstrap3. First instal bootstrap3 as shown below:
+# > (ll_env) D:\My Documents\python\Projects\Django>pip install django-bootstrap3
+# We need django-bootstrap3 to include jQuery, a JavaScript library that
+# enables some of the interactive elements that the Bootstrap template provides.
+# This code spares us from having to download jQuery and place it in the
+# correct location manually.
+BOOTSTRAP3 = {
+'include_jquery': True,
+}
 #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -28,12 +49,9 @@ SECRET_KEY = 'django-insecure-u_7f^h3x_r(+^8c*%-c87nw9o65yg&+zx*k2(2nv0d1d6vm%-f
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,7 +62,9 @@ INSTALLED_APPS = [
     # My apps
     'learning_logs',
     'users',
-
+    # Third party apps. First instal bootstrap3 as shown below:
+    # > (ll_env) D:\My Documents\python\Projects\Django>pip install django-bootstrap3
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +97,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'learning_log.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -91,7 +109,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -107,16 +124,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
