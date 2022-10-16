@@ -1,35 +1,30 @@
-<!-- 
-This template extends base.html, so it has the same base structure as
-the rest of the pages in Learning Log. Here we define an HTML form.
-The action argument tells the server where to send the data submitted in
-the form; in this case, we send it back to the view function new_topic().
-The method argument tells the browser to submit the data as a POST request.
-Django uses the template tag [csrf_token] to prevent attackers
-from using the form to gain unauthorized access to the server (this kind of
-attack is called a cross-site request forgery).
--->
+<!--@@@@@@@@@@@@@@@@@@@@@ django-bootstrap3 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ATTENTION! On this page we use "django-bootstrap3" styling library that 
+# you have to insatall first as shown below. Also register it seetings.py
+# > (ll_env) pip install django-bootstrap3
+# We need django-bootstrap3 to include jQuery, a JavaScript library that
+# enables some of the interactive elements that the Bootstrap template provides.
+# This code spares us from having to download jQuery and place it in the
+# correct location manually.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+<!-- Most of the changes here are similar to those applied in login.html:
+we load bootstrap3 and add the header block with an appropriate message
+Then we add the class="form" attribute to the <form> tag, use the
+[bootstrap_form]-template tag instead of [form.as_p] as it was before
+(see old file). Then we use the bootstrap3 structure for the submit button-->
 {% extends "learning_logs/base.html" %}
+<!--=================-->
+{% load bootstrap3 %}
+{% block header %}
+  <h2>Add a new topic:</h2>
+{% endblock header %}
+<!--=================-->
 {% block content %}
-  <p>Add a new topic:</p>
-  <!-- Instead of [url 'learning_logs:new_topic'] as it was in a book
-       and gives error = ['learning_logs' is not a registered namespace]
-       we use [url 'new_topic']
-  -->
-    <form action="{% url 'learning_logs:new_topic' %}" method='post'>
-      <!-- Django uses the template tag [csrf_token] to prevent attackers
-           from using the form to gain unauthorized access to the server 
-           (this kind of attack is called a cross-site request forgery).
-      -->
-      {% csrf_token %}
-      <!--Display the form; here you see how simple Django can make tasks 
-          such as displaying a form. We only need to include the template 
-          variable [form.as_p] for Django to create all the fields 
-          necessary to display the form automatically. The as_p modifier
-          tells Django to render all the form elements in paragraph format, 
-          which is a simple way to display the form neatly.
-      -->
-      {{ form.as_p }}
-      <!-- Django doesn't create a submit button for forms, so we define it-->
-      <button name="submit">add topic</button>
-    </form>
+  <form action="{% url 'learning_logs:new_topic' %}" method='post' class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">add topic</button>
+    {% endbuttons %}
+  </form>
 {% endblock content %}

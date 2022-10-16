@@ -1,19 +1,9 @@
 <!--================= The Topics Template ======================
 The template for the topics page receives the context dictionary 
 so the template can use the data that topics() provides
-Here we don't need the [load bootstrap3] tag, because we're not using any
-custom bootstrap3-tags in this file. We add the heading Topics inside
-the header block. We style each topic as an <h3> element to make them a
-bit larger on the page and do the same for the link to add a new topic
 =============================================================-->
 <!-- Inherit from base.html -->
 {% extends "learning_logs/base.html" %}
-<!-- ================================================-->
-{% block header %}
-  <h1>Topics</h1>
-{% endblock header %}
-<!-- ================================================-->
-
 <!-- Content specific to this page onlt -->
 {% block content %}
   <p>Topics</p>
@@ -39,16 +29,15 @@ bit larger on the page and do the same for the link to add a new topic
        <li>{{ topic }}</li>
        <h3><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></h3>
        -->
-      <li>
-        <h3>
-          <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
-        </h3>
-      </li>
-    <!-- print msg if there are no items in the list.-->
-    {% empty %} 
+      <li><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></li>
+    {% empty %} <!-- print msg if there are no items in the list.-->
       <li>No topics have been added yet.</li>
     {% endfor %}
   </ul>
-  <!--Render link for NewTopicForm and place it after existing topics. -->
-  <h3><a href="{% url 'learning_logs:new_topic' %}">Add new topic</h3>
+  <!--Render link for NewTopicForm and place it after the list of existing topics.
+      Instead of [url 'learning_logs:new_topic'] as it was in a book
+       and gave error = ['learning_logs' is not a registered namespace]
+       we use [url 'new_topic']
+  -->
+  <a href="{% url 'learning_logs:new_topic' %}">Add a new topic:</a>
 {% endblock content %}
