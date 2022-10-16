@@ -22,9 +22,10 @@ from django.urls import include #,url
 from django.urls import re_path    
 from django.contrib import admin
 #==============================================================
-# Below (as in the book) in every INCLUDE() we also must pass
+# Below (as in the book) in every INCLUDE() where we also must pass
 # a namespace parameter, like include('users.urls', namespace='users')
-# but in this version of Django this gives error. The example below seems to work
+# but in this version of Django this gives error = app_name is absent 
+# Tocorrect error we additionaly pass [app_name] as shown below:
 '''
     re_path(r''       , include( ('learning_logs.urls','learning_logs'),
                                 namespace= 'learning_logs'
@@ -33,14 +34,14 @@ from django.contrib import admin
 ''' 
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls ),
-    #re_path(r'^users/', include('users.urls')),
-    #re_path(r''       , include( 'learning_logs.urls')),  
-    
-    re_path(r''       , include( ('learning_logs.urls','learning_logs'),
-                                namespace= 'learning_logs'
-                                )),    
-          
- 
+    # This line will match any URL that starts with the word users, such as  
+    # http://localhost:8000/users/login/
+    # We also create the namespace 'users' so we’ll be able to distinguish URLs
+    # that belong to the learning_logs app from URLs that belong to the users app.
+    re_path(r'^users/', include(('users.urls','users'), namespace='users')),
+    re_path(r'', include(('learning_logs.urls','learning_logs'),
+                         namespace= 'learning_logs')),    
+
 ]
 #======================================================================         
 '''

@@ -9,7 +9,24 @@ https://stackoverflow.com/questions/60514624/learning-logs-is-not-a-registered-n
 <p> <a href="http://localhost:8000/admin/">Admin</a>
 <p> <!-- dash ("-") in the end tags again next href-link! -->
     <a href="{% url 'learning_logs:index' %}">LearningLog</a> -
-    <a href="{% url 'learning_logs:topics' %}">Topics</a>  
+    <a href="{% url 'learning_logs:topics' %}">Topics</a> -
+    <!-- 
+    We don’t want the link to display when the user, is already logged
+    in so we nest it inside [if]-tag. In Django’s authentication system, 
+    every template has a user variable available, which always has an 
+    is_authenticated attribute set: the attribute is True if the user 
+    is logged in and False if they aren’t. This allows you to display one 
+    message to authenticated users and another to unauthenticated users.
+    Also authenticated users have an additional username attribute set, 
+    which we use to personalize the greeting and remind the user that 
+    he is logged in
+    -->
+    {% if user.is_authenticated %}
+      Hello, {{ user.username }}.
+    {% else %}
+    <!--Display a link to the login page for non-authenticated users-->
+      <a href="{% url 'users:login' %}">log in</a>
+    {% endif %}
 </p>
 {% block content %}{% endblock content %}
 
