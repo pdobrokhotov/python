@@ -263,6 +263,21 @@ of the form-based pages:
 - edit_entry
 - register
 ============================================================
+================= Deploy site to Internet Host =============
+============ Installing the Heroku Toolbelt ================
+============================================================
+We'll use free hosting on https://www.heroku.com/
+Register there first
+To deploy and manage a project on Heroku’s servers, you’ll need the tools
+available in the Heroku Toolbelt. To install the latest version of the Heroku
+Toolbelt, visit https://toolbelt.heroku.com/ and follow the directions for your operating system, which will include either a one-line terminal command
+or an installer you can download and run.
+-------------- Installing Required Packages -------------------
+You’ll also need to install a number of packages that help serve Django projects on a live server. In an active virtual environment, issue the following commands:
+(ll_env)Django$ pip install dj-database-url
+(ll_env)Django$ pip install dj-static
+(ll_env)Django$ pip install static3
+(ll_env)Django$ pip install gunicorn
 
 
 
