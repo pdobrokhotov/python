@@ -1,12 +1,18 @@
 {% extends "learning_logs/base.html" %}
+<!--====== HEADER ===========-->
+{% load bootstrap3 %}
+{% block header %}
+  <h2>Register:</h2>
+{% endblock header %}
+<!--======= BODY ===========-->
 {% block content %}
-  <form method="post" action="{% url 'users:register' %}">
+  <form action="{% url 'users:register' %}" 
+        method='post' class="form">
     {% csrf_token %}
-    <!-- We use the as_p method again so Django will display all the fields 
-    in the form appropriately, including any error messages if the form is 
-    not filled out correctly.-->
-    {{ form.as_p }}
-    <button name="submit">register</button>
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">register</button>
+    {% endbuttons %}
     <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
   </form>
 {% endblock content %}

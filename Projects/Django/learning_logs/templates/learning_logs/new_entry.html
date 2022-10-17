@@ -2,16 +2,28 @@
      to the template for new_topic.html. Thus, read code notes there. 
 -->
 {% extends "learning_logs/base.html" %}
+<!--=================-->
+{% load bootstrap3 %}
+{% block header %}
+  <h2>Add a new entry:</h2>
+{% endblock header %}
+<!--=================-->
 {% block content %}
-  <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
-  <p>Add a new entry:</p>
-    <!-- Instead of [url 'learning_logs:new_entry'] as it was in a book
-         and gives error = ['learning_logs' is not a registered namespace]
-         we use [url 'new_entry']
-    -->
-  <form action="{% url 'learning_logs:new_entry' topic.id %}" method='post'>
+  <form action="{% url 'learning_logs:new_entry' topic.id %}"  method='post' class="form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button name='submit'>add entry</button>
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button name="submit" class="btn btn-primary">add entry</button>
+    {% endbuttons %}
   </form>
 {% endblock content %}
+ 
+
+
+
+
+
+
+
+
+

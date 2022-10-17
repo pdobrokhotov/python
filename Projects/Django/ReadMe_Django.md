@@ -254,6 +254,15 @@ project’s templates.To install django-bootstrap3, issue the following command
 in an active virtual environment:
 > (ll_env)learning_log$ pip install django-bootstrap3
 ============================================================
+================= Try It Yourself ==========================
+============================================================
+20-1. Other Forms: We’ve applied Bootstrap’s styles for the
+login and add_topic pages. Make similar changes to the rest 
+of the form-based pages: 
+- new_entry
+- edit_entry
+- register
+============================================================
 
 
 
