@@ -278,6 +278,13 @@ You’ll also need to install a number of packages that help serve Django projec
 (ll_env)Django$ pip install dj-static
 (ll_env)Django$ pip install static3
 (ll_env)Django$ pip install gunicorn
+Make sure you issue the commands one at a time so you know if any
+package fails to install correctly. The package dj-database-url helps Django
+communicate with the database Heroku uses, dj-static and static3 help
+Django manage static files correctly, and gunicorn is a server capable of
+serving apps in a live environment. (Static files contain style rules and
+JavaScript files.)
+============================================================
 
 
 
